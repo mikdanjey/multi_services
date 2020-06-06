@@ -1,3 +1,6 @@
+
+wurstmeister/kafka
+
 docker-compose up
 
 docker-compose down
@@ -34,3 +37,8 @@ cd /opt/bitnami/kafka
 
 ## Start a consumer
 ./bin/kafka-console-consumer.sh --zookeeper zookeeper:2181 --topic mytopic --from-beginning
+
+
+
+https://kafka.apache.org/quickstart
+http://selftuts.com/kafaka-setup-using-docker-compose/
