@@ -1,0 +1,20 @@
+zookeeper:
+    container_name: zookeeper
+    image: zookeeper:3.5
+    ports:
+        - "2181:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ALLOW_ANONYMOUS_LOGIN: 'yes'
+
+
+zookeeper:
+    container_name: zookeeper
+    image: wurstmeister/zookeeper
+    ports:
+        - "2181:2181"
+    volumes:
+        - 'zookeeper_data:/my_zookeeper'
+    environment:
+        ZOO_MY_ID: 1
+        ALLOW_ANONYMOUS_LOGIN: 'yes'

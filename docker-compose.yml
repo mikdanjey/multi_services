@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3"
 
 volumes:
   postgres_data: {}
@@ -27,35 +27,24 @@ services:
 
   zookeeper:
     container_name: zookeeper
-    image: zookeeper:3.6.1
-    hostname: zookeeper
-    restart: always
+    image: zookeeper:3.5
     ports:
-      - "2181:2181"
-      - "8080:8080"
-      - "3888:3888"
-      - "2888:2888"
+        - "2181:2181"
     volumes:
-        - 'zookeeper_data:/bitnami'
+      - 'zookeeper_data:/tmp/zookeeper'
     environment:
-      - ZOO_MY_ID=1
-      - ALLOW_ANONYMOUS_LOGIN=yes
+      ZOO_MY_ID: 1
+      ALLOW_ANONYMOUS_LOGIN: 'yes'
 
   kafka:
     container_name: kafka
-    image: 'bitnami/kafka:2'
-    hostname: kafka
+    image: wurstmeister/kafka
     ports:
       - '9092:9092'
-      - '9093:9093'
     volumes:
-      - 'kafka_data:/bitnami'
-    environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - environment
     depends_on:
       - zookeeper
 
@@ -65,7 +54,7 @@ services:
     volumes:
       - ./storage:/opt/data
       - coordinator_var:/opt/druid/var
-    depends_on: 
+    depends_on:
       - zookeeper
       - postgres
     ports:
