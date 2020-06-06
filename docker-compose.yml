@@ -30,6 +30,8 @@ services:
     image: zookeeper:3.5
     ports:
         - "2181:2181"
+    volumes:
+      - 'zookeeper_data:/tmp/zookeeper'
     environment:
       ZOO_MY_ID: 1
       ALLOW_ANONYMOUS_LOGIN: 'yes'
