@@ -1,6 +1,7 @@
 
 ## Downlaod Files
 `curl https://raw.githubusercontent.com/manikandan-kyyba/multi_services/develop/docker-compose.yml --output docker-compose.yml`
+
 `curl https://raw.githubusercontent.com/manikandan-kyyba/multi_services/develop/environment --output environment`
 
 ## Up the server
@@ -51,3 +52,5 @@ https://kafka.apache.org/quickstart
 http://selftuts.com/kafaka-setup-using-docker-compose/
 https://hub.docker.com/r/wurstmeister/kafka
 https://github.com/apache/druid/blob/master/distribution/docker/docker-compose.yml
+
+https://druid.apache.org/docs/latest/development/extensions.html#loading-extensions

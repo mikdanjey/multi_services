@@ -1,9 +1,9 @@
 
 # Kafka config
-KAFKA_ADVERTISED_HOST_NAME=192.168.29.95
+KAFKA_ADVERTISED_HOST_NAME=192.168.29.96
 KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
 ALLOW_PLAINTEXT_LISTENER=yes
-KAFKA_CREATE_TOPICS: "test:1:1"
+KAFKA_CREATE_TOPICS="mytopic:1:1"
 
 # Java tuning
 DRUID_XMX=1g
@@ -14,7 +14,7 @@ DRUID_MAXDIRECTMEMORYSIZE=6172m
 
 druid_emitter_logging_logLevel=debug
 
-druid_extensions_loadList=["druid-kafka-indexing-service", "druid-kinesis-indexing-service", "druid-google-extensions", "druid-hdfs-storage", "druid-s3-extensions", "druid-histogram", "druid-datasketches", "druid-lookups-cached-global", "postgresql-metadata-storage", "druid-azure-extensions"]
+druid_extensions_loadList=["kafka-emitter", "druid-kafka-extraction-namespace", "druid-kafka-indexing-service", "druid-lookups-cached-global", "postgresql-metadata-storage"]
 
 druid_zk_service_host=zookeeper
 
@@ -38,3 +38,8 @@ druid_processing_numThreads=2
 druid_processing_numMergeBuffers=2
 
 DRUID_LOG4J=<?xml version="1.0" encoding="UTF-8" ?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console"/></Root><Logger name="org.apache.druid.jetty.RequestLog" additivity="false" level="DEBUG"><AppenderRef ref="Console"/></Logger></Loggers></Configuration>
+
+
+# Kafka
+druid_emitter_kafka_bootstrap_servers=localhost:9092
+druid_emitter_kafka_producer_config={"max.block.ms":90000}

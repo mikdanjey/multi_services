@@ -1,7 +1,7 @@
 version: "3"
 
 volumes:
-  postgres_data: {}
+  metadata_data: {}
   zookeeper_data: {}
   kafka_data: {}
   middle_var: {}
@@ -16,10 +16,7 @@ services:
     container_name: postgres
     image: postgres:latest
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: always
-    ports:
-      - "5432:5432"
+      - metadata_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=FoolishPassword
       - POSTGRES_USER=druid
@@ -29,7 +26,10 @@ services:
     container_name: zookeeper
     image: zookeeper:3.6.1
     ports:
+        - "2888:2888"
+        - "3888:3888"
         - "2181:2181"
+        - "8080:8080"
     volumes:
       - 'zookeeper_data:/tmp/zookeeper'
     environment:
@@ -40,7 +40,7 @@ services:
     container_name: kafka
     image: wurstmeister/kafka
     ports:
-      - '9092:9092'
+      - "9092:9092"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     env_file:
