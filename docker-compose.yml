@@ -43,10 +43,8 @@ services:
       - '9092:9092'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.29.95
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      ALLOW_PLAINTEXT_LISTENER: 'yes'
+    env_file:
+      - environment
     depends_on:
       - zookeeper
 

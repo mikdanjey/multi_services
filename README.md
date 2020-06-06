@@ -1,18 +1,20 @@
 
+## Downlaod Files
+`curl https://raw.githubusercontent.com/manikandan-kyyba/multi_services/develop/docker-compose.yml --output docker-compose.yml`
+`curl https://raw.githubusercontent.com/manikandan-kyyba/multi_services/develop/environment --output environment`
 
-docker-compose up -d
+## Up the server
+`docker-compose up -d`
 
 docker-compose down
 
 docker images
 
+docker rmi adf2b126dda8 --force
+
 docker container ls
 
 docker exec -it kafka bash
-
-docker rmi adf2b126dda8 --force
-
-./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 
 ## Goto Kafka location
 cd /opt/kafka
