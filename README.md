@@ -49,4 +49,5 @@ cd /opt/kafka
 ### Ref
 https://kafka.apache.org/quickstart
 http://selftuts.com/kafaka-setup-using-docker-compose/
+https://hub.docker.com/r/wurstmeister/kafka
 https://github.com/apache/druid/blob/master/distribution/docker/docker-compose.yml
