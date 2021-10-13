@@ -1,5 +1,5 @@
 const { Kafka } = require("kafkajs");
-const { CLOUDKARAFKA_TOPIC, CLOUDKARAFKA_BROKERS, CLOUDKARAFKA_USERNAME, CLOUDKARAFKA_PASSWORD, CLOUDKARAFKA_CLIENT_ID } = require("./config.js");
+const { CLOUDKARAFKA_PARTITION, CLOUDKARAFKA_TOPIC, CLOUDKARAFKA_BROKERS, CLOUDKARAFKA_USERNAME, CLOUDKARAFKA_PASSWORD, CLOUDKARAFKA_CLIENT_ID } = require("./config.js");
 
 async function createPartition() {
     const kafka = new Kafka({
@@ -20,7 +20,7 @@ async function createPartition() {
         topics: [
             {
                 topic: CLOUDKARAFKA_TOPIC,
-                numPartitions: 10,
+                numPartitions: CLOUDKARAFKA_PARTITION,
             },
         ],
     });

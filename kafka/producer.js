@@ -1,7 +1,7 @@
 const { Kafka, logLevel } = require('kafkajs');
 const { v4: uuidv4 } = require('uuid');
 const faker = require('faker');
-const { CLOUDKARAFKA_TOPIC, CLOUDKARAFKA_BROKERS, CLOUDKARAFKA_USERNAME, CLOUDKARAFKA_PASSWORD, CLOUDKARAFKA_CLIENT_ID } = require("./config.js");
+const { CLOUDKARAFKA_PARTITION, CLOUDKARAFKA_TOPIC, CLOUDKARAFKA_BROKERS, CLOUDKARAFKA_USERNAME, CLOUDKARAFKA_PASSWORD, CLOUDKARAFKA_CLIENT_ID } = require("./config.js");
 
 // 4oxw1lld-default
 async function produce() {
@@ -36,9 +36,9 @@ async function produce() {
                     deviceType: getRandom("Device Type", 4),
                     tpn: getRandom("TPN", 1000),
                     amount: getRandomAmount(),
-                    transactionDate: generateRandomDOB(),
+                    transactionDate: generateRandomDate(),
                 }),
-                partition: 1
+                partition: CLOUDKARAFKA_PARTITION
             },
         ],
     });
@@ -55,7 +55,7 @@ getRandomAmount = () => {
     return parseFloat(`${(Math.floor(Math.random() * 100) + 50)}.${(Math.floor(Math.random() * 50) + 10)}`);
 }
 
-generateRandomDOB = () => {
+generateRandomDate = () => {
     const random = getRandomDate(new Date('2020-01-01'), new Date('2021-10-01'))
     return random.toISOString();
 }
@@ -75,5 +75,6 @@ randomDate = (start, end, startHour, endHour) => {
 
 setInterval(() => {
     produce();
+    // console.log(generateRandomDate());
 }, 1000);
 
