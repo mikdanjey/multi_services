@@ -2,19 +2,20 @@ version: "3"
 
 volumes:
   metadata_data: {}
-  zookeeper_data: {}
-  kafka_data: {}
   middle_var: {}
   historical_var: {}
   broker_var: {}
   coordinator_var: {}
   router_var: {}
+  druid_shared: {}
 
 
 services:
   postgres:
     container_name: postgres
     image: postgres:latest
+    ports:
+      - "5432:5432"
     volumes:
       - metadata_data:/var/lib/postgresql/data
     environment:
@@ -22,16 +23,12 @@ services:
       - POSTGRES_USER=druid
       - POSTGRES_DB=druid
 
+  # Need 3.5 or later for container nodes
   zookeeper:
     container_name: zookeeper
     image: zookeeper:3.6.1
     ports:
-        - "2888:2888"
-        - "3888:3888"
-        - "2181:2181"
-        - "8080:8080"
-    volumes:
-      - 'zookeeper_data:/tmp/zookeeper'
+      - "2181:2181"
     environment:
       ZOO_MY_ID: 1
       ALLOW_ANONYMOUS_LOGIN: 'yes'
@@ -40,19 +37,26 @@ services:
     container_name: kafka
     image: wurstmeister/kafka
     ports:
+      - "9094:9094"
       - "9092:9092"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    env_file:
-      - environment
+    environment:
+      DOCKER_API_VERSION: 1.22
+      KAFKA_ADVERTISED_HOST_NAME: 10.20.152.200
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://10.20.152.200:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
     depends_on:
       - zookeeper
 
   coordinator:
+    image: apache/druid:0.22.0
     container_name: coordinator
-    image: apache/druid:0.18.1
     volumes:
-      - ./storage:/opt/data
+      - druid_shared:/opt/shared
       - coordinator_var:/opt/druid/var
     depends_on:
       - zookeeper
@@ -65,8 +69,8 @@ services:
       - environment
 
   broker:
+    image: apache/druid:0.22.0
     container_name: broker
-    image: apache/druid:0.18.1
     volumes:
       - broker_var:/opt/druid/var
     depends_on: 
@@ -81,10 +85,10 @@ services:
       - environment
 
   historical:
+    image: apache/druid:0.22.0
     container_name: historical
-    image: apache/druid:0.18.1
     volumes:
-      - ./storage:/opt/data
+      - druid_shared:/opt/shared
       - historical_var:/opt/druid/var
     depends_on: 
       - zookeeper
@@ -98,10 +102,10 @@ services:
       - environment
 
   middlemanager:
+    image: apache/druid:0.22.0
     container_name: middlemanager
-    image: apache/druid:0.18.1
     volumes:
-      - ./storage:/opt/data
+      - druid_shared:/opt/shared
       - middle_var:/opt/druid/var
     depends_on: 
       - zookeeper
@@ -109,14 +113,15 @@ services:
       - coordinator
     ports:
       - "8091:8091"
+      - "8100-8105:8100-8105"
     command:
       - middleManager
     env_file:
       - environment
 
   router:
+    image: apache/druid:0.22.0
     container_name: router
-    image: apache/druid:0.18.1
     volumes:
       - router_var:/opt/druid/var
     depends_on:

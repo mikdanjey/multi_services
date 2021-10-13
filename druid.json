@@ -1,0 +1,39 @@
+{
+    "type": "kafka",
+    "spec": {
+      "ioConfig": {
+        "type": "kafka",
+        "consumerProperties": {
+          "bootstrap.servers": "10.20.152.200:9094"
+        },
+        "topic": "newtopic1",
+        "inputFormat": {
+          "type": "json"
+        },
+        "useEarliestOffset": true
+      },
+      "tuningConfig": {
+        "type": "kafka"
+      },
+      "dataSchema": {
+        "dataSource": "newtopic1",
+        "timestampSpec": {
+          "column": "!!!_no_such_column_!!!",
+          "missingValue": "2010-01-01T00:00:00Z"
+        },
+        "dimensionsSpec": {
+          "dimensions": [
+            "name",
+            "email",
+            "phone",
+            "city"
+          ]
+        },
+        "granularitySpec": {
+          "queryGranularity": "none",
+          "rollup": false,
+          "segmentGranularity": "hour"
+        }
+      }
+    }
+  }
