@@ -5,13 +5,14 @@
 `curl https://raw.githubusercontent.com/manikandan-kyyba/multi_services/develop/environment --output environment`
 
 ## Up the server
-`docker-compose up -d`
+docker-compose up -d
 
 http://localhost:8888
 
 http://10.20.152.200:8888
 
 docker-compose down
+docker volume prune
 
 docker images
 
@@ -72,3 +73,14 @@ https://github.com/apache/druid/blob/master/distribution/docker/docker-compose.y
 https://druid.apache.org/docs/latest/development/extensions.html#loading-extensions
 
 https://github.com/apache/druid/blob/0.22.0/distribution/docker/docker-compose.yml
+
+CORS: https://druid.apache.org/docs/latest/design/auth.html
+
+
+# Linus
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir=~/chromeTemp
+
+# Windows
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="D:/temp"
+
+https://www.xenonstack.com/blog/apache-druid
