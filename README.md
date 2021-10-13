@@ -78,7 +78,7 @@ CORS: https://druid.apache.org/docs/latest/design/auth.html
 
 
 # Linus
-"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir=~/chromeTemp
+chrome --disable-web-security --user-data-dir=~/chromeTemp
 
 # Windows
 "C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="D:/temp"
