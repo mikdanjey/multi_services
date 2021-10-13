@@ -9,7 +9,7 @@ docker-compose up -d
 
 http://localhost:8888
 
-http://10.20.152.200:8888
+http://3.88.194.150:8888
 
 docker-compose down
 docker volume prune
