@@ -1,39 +1,45 @@
 {
-    "type": "kafka",
-    "spec": {
-      "ioConfig": {
-        "type": "kafka",
-        "consumerProperties": {
-          "bootstrap.servers": "10.20.152.200:9094"
-        },
-        "topic": "newtopic1",
-        "inputFormat": {
-          "type": "json"
-        },
-        "useEarliestOffset": true
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "10.20.152.200:9094"
       },
-      "tuningConfig": {
-        "type": "kafka"
+      "topic": "transactions",
+      "inputFormat": {
+        "type": "json"
       },
-      "dataSchema": {
-        "dataSource": "newtopic1",
-        "timestampSpec": {
-          "column": "!!!_no_such_column_!!!",
-          "missingValue": "2010-01-01T00:00:00Z"
-        },
-        "dimensionsSpec": {
-          "dimensions": [
-            "name",
-            "email",
-            "phone",
-            "city"
-          ]
-        },
-        "granularitySpec": {
-          "queryGranularity": "none",
-          "rollup": false,
-          "segmentGranularity": "hour"
-        }
+      "useEarliestOffset": true
+    },
+    "tuningConfig": {
+      "type": "kafka"
+    },
+    "dataSchema": {
+      "dataSource": "transactions",
+      "timestampSpec": {
+        "column": "transactionDate",
+        "format": "iso"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "transactionId",
+          "customerId",
+          "ownerId",
+          "channel",
+          "deviceType",
+          "tpn",
+          {
+            "type": "double",
+            "name": "amount"
+          }
+        ]
+      },
+      "granularitySpec": {
+        "queryGranularity": "none",
+        "rollup": false,
+        "segmentGranularity": "all"
       }
     }
   }
+}
