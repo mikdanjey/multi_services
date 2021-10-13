@@ -12,3 +12,5 @@ https://kafka.js.org/docs/configuration
 
 3.88.194.150:9094
 transactions
+
+pm2 start producer.js --name "Kafka Producer"
