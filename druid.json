@@ -4,7 +4,7 @@
     "ioConfig": {
       "type": "kafka",
       "consumerProperties": {
-        "bootstrap.servers": "10.20.152.200:9094"
+        "bootstrap.servers": "localhost:9094"
       },
       "topic": "transactions",
       "inputFormat": {
