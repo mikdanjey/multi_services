@@ -90,28 +90,26 @@ class App extends Component {
 
         <tr>
           <th>All Data <button onClick={this.getDruidAllData}>Get Data</button></th>
+          <th>Last Month Data <button onClick={this.getDruidLastMonthData}>Get Data</button></th>
         </tr>
         <tr>
-          <td>
+
+          <td width="280px">
             <code>
               <pre>
                 {jsonAllData}
               </pre>
             </code>
           </td>
-        </tr>
 
-        <tr>
-          <th>Last Month Data <button onClick={this.getDruidAllData}>Get Data</button></th>
-        </tr>
-        <tr>
-          <td>
+          <td width="280px">
             <code>
               <pre>
                 {jsonLastMonthData}
               </pre>
             </code>
           </td>
+
         </tr>
 
       </table>
