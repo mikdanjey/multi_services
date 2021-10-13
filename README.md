@@ -9,7 +9,7 @@ docker-compose up -d
 
 http://localhost:8888
 
-http://10.20.152.200:8888
+http://3.88.194.150:8888
 
 docker-compose down
 docker volume prune
@@ -78,7 +78,7 @@ CORS: https://druid.apache.org/docs/latest/design/auth.html
 
 
 # Linus
-"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir=~/chromeTemp
+chrome --disable-web-security --user-data-dir=~/chromeTemp
 
 # Windows
 "C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="D:/temp"
