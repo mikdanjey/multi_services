@@ -7,6 +7,10 @@
 ## Up the server
 `docker-compose up -d`
 
+http://localhost:8888
+
+http://10.20.152.200:8888
+
 docker-compose down
 
 docker images
@@ -21,14 +25,14 @@ docker exec -it kafka bash
 cd /opt/kafka
 
 ## Create Topic
-./bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic mytopic
+./bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 10 --topic newtopic
 
-./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic mytopic
+./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic newtopic
 
 ## Topic Description
-./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic mytopic
+./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic newtopic
 
-./bin/kafka-topics.sh --describe --zookeeper zookeeper:2181 --topic mytopic
+./bin/kafka-topics.sh --describe --zookeeper zookeeper:2181 --topic newtopic
 
 ## List All Topics
 ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
@@ -36,15 +40,27 @@ cd /opt/kafka
 ./bin/kafka-topics.sh --list --zookeeper zookeeper:2181
 
 ## Send some messages
-./bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic mytopic
+./bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic newtopic
 
-./bin/kafka-console-producer.sh --zookeeper zookeeper:2181 --topic mytopic
+./bin/kafka-console-producer.sh --zookeeper zookeeper:2181 --topic newtopic
 
 ## Start a consumer
-./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic mytopic --from-beginning
+./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic newtopic --from-beginning
 
-./bin/kafka-console-consumer.sh --zookeeper zookeeper:2181 --topic mytopic --from-beginning
+./bin/kafka-console-consumer.sh --zookeeper zookeeper:2181 --topic newtopic --from-beginning
 
+
+
+Stop the container(s) using the following command:
+docker-compose down
+Delete all containers using the following command:
+docker rm -f $(docker ps -a -q)
+Delete all volumes using the following command:
+docker volume rm $(docker volume ls -q)
+or
+docker volume prune
+Restart the containers using the following command:
+docker-compose up -d
 
 
 ### Ref
@@ -54,3 +70,5 @@ https://hub.docker.com/r/wurstmeister/kafka
 https://github.com/apache/druid/blob/master/distribution/docker/docker-compose.yml
 
 https://druid.apache.org/docs/latest/development/extensions.html#loading-extensions
+
+https://github.com/apache/druid/blob/0.22.0/distribution/docker/docker-compose.yml
