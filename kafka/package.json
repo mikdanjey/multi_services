@@ -1,0 +1,19 @@
+{
+  "name": "kafka-nodejs",
+  "version": "1.0.0",
+  "description": "kafka-nodejs",
+  "main": "producer.js",
+  "scripts": {
+    "start": "node producer.js",
+    "producer": "node producer.js",
+    "consumer": "node consumer.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "faker": "^5.5.3",
+    "kafkajs": "^1.15.0",
+    "uuid": "^8.3.2"
+  }
+}

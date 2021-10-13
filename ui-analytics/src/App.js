@@ -12,12 +12,13 @@ class App extends Component {
     this.$ = plywood.$;
     this.state = {
       jsonAllData: null,
+      jsonLastMonthData: null,
     }
     this.druidRequester = druidRequesterFactory({
-      host: 'localhost:8888' // Where ever your Druid may be
+      host: '3.88.194.150:8888' // Where ever your Druid may be
     });
 
-    this.wikiDataset = External.fromJS({
+    this.druidDataset = External.fromJS({
       engine: 'druid',
       source: 'transactions',  // The datasource name in Druid
       timeAttribute: 'time',  // Druid's anonymous time attribute will be called 'time',
@@ -29,12 +30,13 @@ class App extends Component {
 
   componentDidMount() {
     this.getDruidAllData();
+    this.getDruidLastMonthData();
   }
 
   getDruidAllData = () => {
     const thisClass = this;
     var context = {
-      transactions: this.wikiDataset
+      transactions: this.druidDataset
     };
     var ex = this.ply()
       // Define the external in scope with a filter on time and language
@@ -56,17 +58,17 @@ class App extends Component {
     // .done();
   }
 
-  getDruidAllData = () => {
+  getDruidLastMonthData = () => {
     const thisClass = this;
     var context = {
-      transactions: this.wikiDataset
+      transactions: this.druidDataset
     };
     var ex = this.ply()
       // Define the external in scope with a filter on time and language
       .apply("transactions",
         this.$('transactions').filter(this.$("time").in({
-          start: new Date("2020-01-01T00:00:00Z"),
-          end: new Date("2021-10-01T00:00:00Z")
+          start: new Date("2021-09-01T00:00:00Z"),
+          end: new Date("2021-09-30T00:00:00Z")
         }))
       )
       // Calculate count
@@ -76,30 +78,40 @@ class App extends Component {
     ex.compute(context).then(function (data) {
       // Log the data while converting it to a readable standard
       // console.log(JSON.stringify(data.toJS(), null, 2));
-      thisClass.setState({ jsonAllData: JSON.stringify(data.toJS(), null, 2) });
+      thisClass.setState({ jsonLastMonthData: JSON.stringify(data.toJS(), null, 2) });
     });
     // .done();
   }
 
   render() {
-    const { jsonAllData } = this.state;
+    const { jsonAllData, jsonLastMonthData } = this.state;
     return <div>
-      <button onClick={this.getDruidAllData}>Get All Data</button>
-
-
       <table border="2" cellspacing="0" cellpadding="0">
+
         <tr>
-          <th>All Data</th>
+          <th>All Data <button onClick={this.getDruidAllData}>Get Data</button></th>
+          <th>Last Month Data <button onClick={this.getDruidLastMonthData}>Get Data</button></th>
         </tr>
         <tr>
-          <td>
+
+          <td width="280px">
             <code>
               <pre>
                 {jsonAllData}
               </pre>
             </code>
           </td>
+
+          <td width="280px">
+            <code>
+              <pre>
+                {jsonLastMonthData}
+              </pre>
+            </code>
+          </td>
+
         </tr>
+
       </table>
     </div>;
   }
