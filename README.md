@@ -9,7 +9,9 @@ docker-compose up -d
 
 http://localhost:8888
 
-http://ec2-107-21-84-30.compute-1.amazonaws.com:8888
+Druid UI: http://ec2-107-21-84-30.compute-1.amazonaws.com:8888
+
+Analytics UI: http://ec2-107-21-84-30.compute-1.amazonaws.com:5000
 
 docker-compose down
 docker volume prune
