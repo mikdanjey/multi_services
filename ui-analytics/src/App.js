@@ -15,7 +15,7 @@ class App extends Component {
       jsonLastMonthData: null,
     }
     this.druidRequester = druidRequesterFactory({
-      host: '3.88.194.150:8888' // Where ever your Druid may be
+      host: window.location.host // Where ever your Druid may be
     });
 
     this.druidDataset = External.fromJS({
