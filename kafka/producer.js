@@ -23,7 +23,7 @@ async function produce() {
     const producer = kafka.producer();
     await producer.connect();
     console.log("Producer connected");
-
+    let index = 0;
     const producedData = await producer.send({
         topic: CLOUDKARAFKA_TOPIC,
         messages: [
@@ -37,6 +37,7 @@ async function produce() {
                     tpn: getRandom("TPN", 1000),
                     amount: getRandomAmount(),
                     transactionDate: generateRandomDate(),
+                    index: ++index,
                 }),
                 partition: CLOUDKARAFKA_PARTITION
             },
@@ -73,8 +74,10 @@ randomDate = (start, end, startHour, endHour) => {
     return date;
 }
 
-setInterval(() => {
-    produce();
+setInterval(async () => {
+    for (let index = 1; index <= 1; index++) {
+        await produce();
+    }
     // console.log(generateRandomDate());
 }, 1000);
 
