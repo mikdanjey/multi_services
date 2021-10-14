@@ -1,3 +1,5 @@
 
 yarn install
-yarn start
+yarn build
+
+pm2 start server.js --name "Analytics UI p=5000"
