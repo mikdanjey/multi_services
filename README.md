@@ -9,7 +9,7 @@ docker-compose up -d
 
 http://localhost:8888
 
-http://3.88.194.150:8888
+http://ec2-107-21-84-30.compute-1.amazonaws.com:8888
 
 docker-compose down
 docker volume prune

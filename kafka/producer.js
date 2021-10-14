@@ -25,10 +25,10 @@ async function produce() {
     console.log("Producer connected");
     let index = 1;
     // after the produce has connected, we start an interval timer
-    if (index <= 1000000) {
+    if (index <= 1100000) {
         setInterval(async () => {
             try {
-                for (let i = 1; i <= 100; i++) {
+                for (let i = 1; i <= 12; i++) {
                     const producedData = await producer.send({
                         topic: CLOUDKARAFKA_TOPIC,
                         messages: [

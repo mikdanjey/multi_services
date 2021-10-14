@@ -4,7 +4,7 @@ module.exports = function (app) {
     app.use(
         ['/status', '/druid/*',],
         createProxyMiddleware({
-            target: 'http://3.88.194.150:8888', //  "proxy": "http://3.88.194.150:8888",
+            target: 'http://ec2-107-21-84-30.compute-1.amazonaws.com:8888',
             changeOrigin: true,
             pathRewrite: {
                 '^/status': '/status', // rewrite path

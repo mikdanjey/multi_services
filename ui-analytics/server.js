@@ -8,7 +8,7 @@ const app = express();
 // Configuration
 const PORT = 5000;
 const HOST = "0.0.0.0";
-const API_SERVICE_URL = "http://3.88.194.150:8888";
+const API_SERVICE_URL = "http://ec2-107-21-84-30.compute-1.amazonaws.com:8888";
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(
     ['/status', '/druid/*',],
     createProxyMiddleware({
-        target: API_SERVICE_URL, //  "proxy": "http://3.88.194.150:8888",
+        target: API_SERVICE_URL,
         changeOrigin: true,
         pathRewrite: {
             '^/status': '/status', // rewrite path
