@@ -23,38 +23,42 @@ async function produce() {
     const producer = kafka.producer();
     await producer.connect();
     console.log("Producer connected");
-    let index = 0;
+    let index = 1;
     // after the produce has connected, we start an interval timer
-    setInterval(async () => {
-        try {
-            for (let i = 1; i <= 100; i++) {
-                const producedData = await producer.send({
-                    topic: CLOUDKARAFKA_TOPIC,
-                    messages: [
-                        {
-                            value: JSON.stringify({
-                                transactionId: uuidv4(),
-                                customerId: getRandom("Customer", 10),
-                                ownerId: getRandom("OwnerId", 10),
-                                channel: getRandom("Channel", 4),
-                                deviceType: getRandom("Device Type", 4),
-                                tpn: getRandom("TPN", 1000),
-                                amount: getRandomAmount(),
-                                transactionDate: generateRandomDate(),
-                                index: index,
-                            }),
-                            partition: CLOUDKARAFKA_PARTITION
-                        },
-                    ],
-                });
-                // if the message is written successfully, log it and increment `i`
-                console.log(`Produced ${index} data ${JSON.stringify(producedData)}`);
-                index++;
+    if (index <= 1000000) {
+        setInterval(async () => {
+            try {
+                for (let i = 1; i <= 100; i++) {
+                    const producedData = await producer.send({
+                        topic: CLOUDKARAFKA_TOPIC,
+                        messages: [
+                            {
+                                value: JSON.stringify({
+                                    transactionId: uuidv4(),
+                                    customerId: getRandom("Customer", 10),
+                                    ownerId: getRandom("OwnerId", 10),
+                                    channel: getRandom("Channel", 4),
+                                    deviceType: getRandom("Device Type", 4),
+                                    tpn: getRandom("TPN", 1000),
+                                    amount: getRandomAmount(),
+                                    transactionDate: generateRandomDate(),
+                                    index: index,
+                                }),
+                                partition: CLOUDKARAFKA_PARTITION
+                            },
+                        ],
+                    });
+                    // if the message is written successfully, log it and increment `i`
+                    console.log(`Produced ${index} data ${JSON.stringify(producedData)}`);
+                    index++;
+                }
+            } catch (err) {
+                console.error("could not write message " + err)
             }
-        } catch (err) {
-            console.error("could not write message " + err)
-        }
-    }, 1000);
+        }, 1000);
+    } else {
+        console.log("Done");
+    }
 }
 
 getRandom = (name = "Sample", count = 0) => {
