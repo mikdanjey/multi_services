@@ -8,6 +8,7 @@ Apache Kafka is a framework implementation of a software bus using stream-proces
 
 
 https://kafka.js.org/docs/configuration
+https://www.sohamkamani.com/nodejs/working-with-kafka/
 
 
 3.88.194.150:9094

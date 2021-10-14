@@ -24,26 +24,37 @@ async function produce() {
     await producer.connect();
     console.log("Producer connected");
     let index = 0;
-    const producedData = await producer.send({
-        topic: CLOUDKARAFKA_TOPIC,
-        messages: [
-            {
-                value: JSON.stringify({
-                    transactionId: uuidv4(),
-                    customerId: getRandom("Customer", 10),
-                    ownerId: getRandom("OwnerId", 10),
-                    channel: getRandom("Channel", 4),
-                    deviceType: getRandom("Device Type", 4),
-                    tpn: getRandom("TPN", 1000),
-                    amount: getRandomAmount(),
-                    transactionDate: generateRandomDate(),
-                    index: ++index,
-                }),
-                partition: CLOUDKARAFKA_PARTITION
-            },
-        ],
-    });
-    console.log(`Produced data ${JSON.stringify(producedData)}`);
+    // after the produce has connected, we start an interval timer
+    setInterval(async () => {
+        try {
+            for (let i = 1; i <= 100; i++) {
+                const producedData = await producer.send({
+                    topic: CLOUDKARAFKA_TOPIC,
+                    messages: [
+                        {
+                            value: JSON.stringify({
+                                transactionId: uuidv4(),
+                                customerId: getRandom("Customer", 10),
+                                ownerId: getRandom("OwnerId", 10),
+                                channel: getRandom("Channel", 4),
+                                deviceType: getRandom("Device Type", 4),
+                                tpn: getRandom("TPN", 1000),
+                                amount: getRandomAmount(),
+                                transactionDate: generateRandomDate(),
+                                index: index,
+                            }),
+                            partition: CLOUDKARAFKA_PARTITION
+                        },
+                    ],
+                });
+                // if the message is written successfully, log it and increment `i`
+                console.log(`Produced ${index} data ${JSON.stringify(producedData)}`);
+                index++;
+            }
+        } catch (err) {
+            console.error("could not write message " + err)
+        }
+    }, 1000);
 }
 
 getRandom = (name = "Sample", count = 0) => {
@@ -74,10 +85,7 @@ randomDate = (start, end, startHour, endHour) => {
     return date;
 }
 
-setInterval(async () => {
-    for (let index = 1; index <= 1; index++) {
-        await produce();
-    }
-    // console.log(generateRandomDate());
-}, 1000);
 
+
+produce();
+// console.log(generateRandomDate());
