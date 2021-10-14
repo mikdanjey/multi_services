@@ -2,8 +2,8 @@
   "name": "ui-analytics",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://3.88.194.150:8888",
   "dependencies": {
+    "http-proxy-middleware": "^2.0.1",
     "plywood": "^0.26.5",
     "plywood-druid-requester": "^2.6.11",
     "react": "^17.0.2",
