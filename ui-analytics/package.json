@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.1",
     "plywood": "^0.26.5",
     "plywood-druid-requester": "^2.6.11",
@@ -13,7 +14,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "prod": "node server.js"
   },
   "eslintConfig": {
     "extends": [

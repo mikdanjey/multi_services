@@ -20,7 +20,7 @@ class App extends Component {
 
     this.druidDataset = External.fromJS({
       engine: 'druid',
-      source: 'transactions',  // The datasource name in Druid
+      source: 'transaction',  // The datasource name in Druid
       timeAttribute: 'time',  // Druid's anonymous time attribute will be called 'time',
       context: {
         timeout: 10000 // The Druid context
@@ -36,20 +36,20 @@ class App extends Component {
   getDruidAllData = () => {
     const thisClass = this;
     var context = {
-      transactions: this.druidDataset
+      transaction: this.druidDataset
     };
     var ex = this.ply()
       // Define the external in scope with a filter on time and language
-      .apply("transactions",
-        this.$('transactions').filter(this.$("time").in({
+      .apply("transaction",
+        this.$('transaction').filter(this.$("time").in({
           start: new Date("2020-01-01T00:00:00Z"),
           end: new Date("2021-10-01T00:00:00Z")
         }))
       )
       // Calculate count
-      .apply('count', this.$('transactions').count())
+      .apply('count', this.$('transaction').count())
       // Calculate the sum of the `added` attribute
-      .apply('amount', '$transactions.sum($amount)');
+      .apply('amount', '$transaction.sum($amount)');
     ex.compute(context).then(function (data) {
       // Log the data while converting it to a readable standard
       // console.log(JSON.stringify(data.toJS(), null, 2));
@@ -61,20 +61,20 @@ class App extends Component {
   getDruidLastMonthData = () => {
     const thisClass = this;
     var context = {
-      transactions: this.druidDataset
+      transaction: this.druidDataset
     };
     var ex = this.ply()
       // Define the external in scope with a filter on time and language
-      .apply("transactions",
-        this.$('transactions').filter(this.$("time").in({
+      .apply("transaction",
+        this.$('transaction').filter(this.$("time").in({
           start: new Date("2021-09-01T00:00:00Z"),
           end: new Date("2021-09-30T00:00:00Z")
         }))
       )
       // Calculate count
-      .apply('count', this.$('transactions').count())
+      .apply('count', this.$('transaction').count())
       // Calculate the sum of the `added` attribute
-      .apply('amount', '$transactions.sum($amount)');
+      .apply('amount', '$transaction.sum($amount)');
     ex.compute(context).then(function (data) {
       // Log the data while converting it to a readable standard
       // console.log(JSON.stringify(data.toJS(), null, 2));
