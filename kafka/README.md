@@ -16,6 +16,7 @@ transactions
 
 pm2 start producer.js --name "Kafka Producer"
 
+git pull origin develop
 docker-compose up
 docker-compose up -d
 docker-compose down
