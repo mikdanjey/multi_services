@@ -1,4 +1,5 @@
-DRUID_LOG4J=<?xml version="1.0" encoding="UTF-8" ?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console"/></Root><Logger name="org.apache.druid.jetty.RequestLog" additivity="false" level="DEBUG"><AppenderRef ref="Console"/></Logger></Loggers></Configuration>
+
+DRUID_LOG4J=<?xml version="1.0" encoding="UTF-8"?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n" /></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console" /></Root><Logger name="org.apache.druid.server.QueryLifecycle" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.server.coordinator" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.segment" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.initialization" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.skife.config" level="warn" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="com.sun.jersey.guice" level="warn" additivity="false"><Appender-ref ref="Console" /></Logger></Loggers></Configuration>
 
 druid_extensions_loadList=["kafka-emitter", "druid-histogram", "druid-datasketches", "druid-kafka-extraction-namespace", "druid-kafka-indexing-service", "druid-lookups-cached-global", "postgresql-metadata-storage"]
 
@@ -28,9 +29,10 @@ druid_lookup_enableLookupSyncOnStartup=false
 druid_indexer_runner_javaOptsArray=["-server", "-Xms512m", "-Xmx512m", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
 
 # Number of tasks per middleManager
-druid_worker_capacity=2
+druid_worker_capacity=4
 
 # Task launch parameters
+druid_indexer_runner_javaOpts=-server -Xms1g -Xmx1g -XX:MaxDirectMemorySize=1g -Duser.timezone=UTC -Dfile.encoding=UTF-8 -XX:+ExitOnOutOfMemoryError -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
 druid_indexer_task_baseTaskDir=var/druid/task
 
 # HTTP server threads
