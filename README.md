@@ -83,6 +83,8 @@ CORS: https://druid.apache.org/docs/latest/design/auth.html
 
 Memory: https://druid.apache.org/docs/latest/operations/basic-cluster-tuning.html
 
+Zookeeper Doc: https://hub.docker.com/_/zookeeper
+
 # Linus
 chrome --disable-web-security --user-data-dir=~/chromeTemp
 
