@@ -21,6 +21,8 @@ docker volume prune
 
 rm -rf /home/ubuntu/.pm2/logs
 
+https://convertlive.com/u/convert/megabytes/to/bytes#500
+
 docker images
 
 docker rmi adf2b126dda8 --force
