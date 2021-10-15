@@ -16,6 +16,7 @@ transactions
 
 pm2 start producer.js --name "Kafka Producer"
 
+docker-compose up
 docker-compose up -d
 docker-compose down
 docker volume prune

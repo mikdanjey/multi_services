@@ -2,7 +2,7 @@ version: '3.9'
 services:
   zookeeperStream:
     container_name: zookeeperStream
-    image: zookeeper:3.6.1
+    image: wurstmeister/zookeeper
     ports:
       - "2182:2182"
     environment:
