@@ -26,7 +26,7 @@ async function produce() {
     let index = 1;
     // after the produce has connected, we start an interval timer
     let refreshIntervalId = setInterval(async () => {
-        if (index <= 10000) { // 1125900 <= 1100000 // false
+        if (index <= 1100000) { // 1125900 <= 1100000 // false
             try {
                 for (let i = 1; i <= 100; i++) {
                     const producedData = await producer.send({
