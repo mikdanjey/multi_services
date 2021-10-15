@@ -19,6 +19,8 @@ docker-compose up -d
 docker-compose down
 docker volume prune
 
+rm -rf /home/ubuntu/.pm2/logs
+
 docker images
 
 docker rmi adf2b126dda8 --force
