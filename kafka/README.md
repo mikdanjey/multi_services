@@ -20,3 +20,5 @@ docker-compose up
 docker-compose up -d
 docker-compose down
 docker volume prune
+
+docker exec -it zookeeperStream /bin/bash
