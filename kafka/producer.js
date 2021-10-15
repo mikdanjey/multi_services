@@ -28,7 +28,7 @@ async function produce() {
     if (index <= 1100000) {
         setInterval(async () => {
             try {
-                for (let i = 1; i <= 12; i++) {
+                for (let i = 1; i <= 100; i++) {
                     const producedData = await producer.send({
                         topic: CLOUD_KAFKA_TOPIC,
                         messages: [
@@ -44,8 +44,8 @@ async function produce() {
                                     transactionDate: generateRandomDate(),
                                     index: index,
                                 }),
-                                partition: 1,
-                                // partition: Math.floor(Math.random() * CLOUD_KAFKA_MAX_PARTITION),
+                                // partition: 1,
+                                partition: Math.floor(Math.random() * CLOUD_KAFKA_MAX_PARTITION),
                             },
                         ],
                     });
