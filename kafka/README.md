@@ -23,3 +23,5 @@ docker-compose down
 docker volume prune
 
 docker exec -it zookeeper1 /bin/bash
+
+docker image prune -a
