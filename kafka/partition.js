@@ -1,15 +1,15 @@
 const { Kafka } = require("kafkajs");
-const { CLOUDKARAFKA_PARTITION, CLOUDKARAFKA_TOPIC, CLOUDKARAFKA_BROKERS, CLOUDKARAFKA_USERNAME, CLOUDKARAFKA_PASSWORD, CLOUDKARAFKA_CLIENT_ID } = require("./config.js");
+const { CLOUD_KAFKA_MAX_PARTITION, CLOUD_KAFKA_TOPIC, CLOUD_KAFKA_BROKERS, CLOUD_KAFKA_USERNAME, CLOUD_KAFKA_PASSWORD, CLOUD_KAFKA_CLIENT_ID } = require("./config.js");
 
 async function createPartition() {
     const kafka = new Kafka({
-        clientId: CLOUDKARAFKA_CLIENT_ID,
-        brokers: CLOUDKARAFKA_BROKERS,
+        clientId: CLOUD_KAFKA_CLIENT_ID,
+        brokers: CLOUD_KAFKA_BROKERS,
         // ssl: true,
         // sasl: {
         //     mechanism: 'scram-sha-256', // plain, scram-sha-256 or scram-sha-512
-        //     username: CLOUDKARAFKA_USERNAME,
-        //     password: CLOUDKARAFKA_PASSWORD,
+        //     username: CLOUD_KAFKA_USERNAME,
+        //     password: CLOUD_KAFKA_PASSWORD,
         // },
     });
 
@@ -19,8 +19,8 @@ async function createPartition() {
     await admin.createTopics({
         topics: [
             {
-                topic: CLOUDKARAFKA_TOPIC,
-                numPartitions: CLOUDKARAFKA_PARTITION,
+                topic: CLOUD_KAFKA_TOPIC,
+                numPartitions: CLOUD_KAFKA_MAX_PARTITION,
             },
         ],
     });
