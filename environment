@@ -1,9 +1,9 @@
 # Java tuning
-DRUID_XMX=30g
-DRUID_XMS=30g
-DRUID_MAXNEWSIZE=30720m
-DRUID_NEWSIZE=30720m
-DRUID_MAXDIRECTMEMORYSIZE=30720m
+DRUID_XMX=32g
+DRUID_XMS=32g
+DRUID_MAXNEWSIZE=32768m
+DRUID_NEWSIZE=32768m
+DRUID_MAXDIRECTMEMORYSIZE=32768m
 druid_emitter_logging_logLevel=debug
 
 druid_extensions_loadList=["kafka-emitter", "druid-histogram", "druid-datasketches", "druid-kafka-extraction-namespace", "druid-kafka-indexing-service", "druid-lookups-cached-global", "postgresql-metadata-storage"]
@@ -18,9 +18,10 @@ druid_metadata_storage_connector_password=FoolishPassword
 
 druid_coordinator_balancer_strategy=cachingCost
 
-druid_indexer_runner_javaOptsArray=["-server", "-Xmx12g", "-Xms30g", "-XX:MaxDirectMemorySize=30g", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
-druid_indexer_fork_property_druid_processing_buffer_sizeBytes=32212254720
+druid_indexer_runner_javaOptsArray=["-server", "-Xmx12g", "-Xms32g", "-XX:MaxDirectMemorySize=32g", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
+druid_indexer_fork_property_druid_processing_buffer_sizeBytes=34359738368
 
+druid_processing_buffer_sizeBytes=34359738368
 druid_storage_type=local
 druid_storage_storageDirectory=/opt/data/segments
 druid_indexer_logs_type=file
