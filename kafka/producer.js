@@ -89,7 +89,5 @@ randomDate = (start, end, startHour, endHour) => {
     return date;
 }
 
-
-
 produce();
 // console.log(generateRandomDate());
