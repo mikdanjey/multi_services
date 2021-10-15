@@ -4,7 +4,7 @@ services:
     container_name: zookeeperStream
     image: wurstmeister/zookeeper
     ports:
-      - "2182:2181"
+      - "2181:2182"
     environment:
       ZOO_MY_ID: 6
       ZOO_CONF_DIR: /conf
