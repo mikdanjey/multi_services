@@ -11,7 +11,7 @@ https://kafka.js.org/docs/configuration
 https://www.sohamkamani.com/nodejs/working-with-kafka/
 
 
-ec2-107-21-84-30.compute-1.amazonaws.com:9094
+18.232.169.254:9094
 transactions
 
 pm2 start producer.js --name "Kafka Producer"
