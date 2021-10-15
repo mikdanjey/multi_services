@@ -1,4 +1,4 @@
-version: "3"
+version: "3.1"
 
 volumes:
   metadata_data: {}
@@ -10,6 +10,47 @@ volumes:
   druid_shared: {}
 
 services:
+  zookeeper1:
+    container_name: zookeeper1
+    image: zookeeper:3.6.3
+    ports:
+      - "2182:2182"
+    environment:
+      ZOO_MY_ID: 6
+      ZOO_TICK_TIME: 2000
+      ZOO_INIT_LIMIT: 10
+      ZOO_SYNC_LIMIT: 5
+      ZOO_AUTOPURGE_PURGEINTERVAL: 0
+      ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
+      ZOO_MAX_CLIENT_CNXNS: 60
+      ZOO_CFG_EXTRA: "clientPort=2182"
+  kafka:
+    container_name: kafka
+    image: wurstmeister/kafka
+    ports:
+      - "9094:9094"
+      - "9092:9092"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 18.232.169.254
+      KAFKA_BROKER_ID: 6
+      KAFKA_LOG_DIR: /logs
+      KAFKA_NUM_PARTITIONS: 8
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_MIN_INSYNC_REPLICAS: 1
+      KAFKA_LOG_RETENTION_HOURS: 168
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+      KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 300000
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2182
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://18.232.169.254:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_CREATE_TOPICS: "transactions:8:1"
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+    depends_on:
+      - zookeeper1
+
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -18,7 +59,7 @@ services:
     volumes:
       - metadata_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=FoolishPassword
+      - POSTGRES_PASSWORD=druid
       - POSTGRES_USER=druid
       - POSTGRES_DB=druid
  
