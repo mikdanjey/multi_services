@@ -25,12 +25,18 @@ services:
   # Need 3.5 or later for container nodes
   zookeeper:
     container_name: zookeeper
-    image: zookeeper:3.6.1
+    image: zookeeper:3.6.3
     ports:
       - "2181:2181"
     environment:
       ZOO_MY_ID: 1
-      ALLOW_ANONYMOUS_LOGIN: 'yes'
+      ZOO_TICK_TIME: 2000
+      ZOO_INIT_LIMIT: 10
+      ZOO_SYNC_LIMIT: 5
+      ZOO_AUTOPURGE_PURGEINTERVAL: 0
+      ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
+      ZOO_MAX_CLIENT_CNXNS: 60
+      ZOO_CFG_EXTRA: "clientPort=2181"
 
   coordinator:
     image: apache/druid:0.22.0

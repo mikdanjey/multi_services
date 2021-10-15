@@ -7,19 +7,12 @@ services:
       - "2182:2182"
     environment:
       ZOO_MY_ID: 6
-      ZOO_CONF_DIR: /conf
-      ZOO_DATA_DIR: /data
-      ZOO_DATA_LOG_DIR: /datalog
-      ZOO_LOG_DIR: /logs
       ZOO_TICK_TIME: 2000
       ZOO_INIT_LIMIT: 10
       ZOO_SYNC_LIMIT: 5
       ZOO_AUTOPURGE_PURGEINTERVAL: 0
       ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
       ZOO_MAX_CLIENT_CNXNS: 60
-      ZOO_AUDIT_ENABLE: 'true'
-      ZOO_ADMINSERVER_ENABLED: 'true'
-      ALLOW_ANONYMOUS_LOGIN: 'true'
       ZOO_CFG_EXTRA: "clientPort=2182"
   kafka:
     container_name: kafka
