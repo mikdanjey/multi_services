@@ -2,7 +2,7 @@ version: '3.9'
 services:
   zookeeper1:
     container_name: zookeeper1
-    image: wurstmeister/zookeeper
+    image: zookeeper:3.6.3
     ports:
       - "2182:2182"
     environment:
@@ -31,7 +31,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      DOCKER_API_VERSION: 1.22
       KAFKA_ADVERTISED_HOST_NAME: 18.232.169.254
       KAFKA_BROKER_ID: 6
       KAFKA_LOG_DIR: /logs
