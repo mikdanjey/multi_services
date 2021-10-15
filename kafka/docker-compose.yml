@@ -1,23 +1,50 @@
-version: '2'
+version: '3.9'
 services:
-  zookeeper:
-    container_name: zookeeper-stream
-    image: wurstmeister/zookeeper
+  zookeeperStream:
+    container_name: zookeeperStream
+    image: zookeeper:3.6.1
     ports:
-      - "2181:2181"
+      - "2182:2182"
+    environment:
+      ZOO_MY_ID: 6
+      ZOO_CONF_DIR: /conf
+      ZOO_DATA_DIR: /data/zookeeper
+      ZOO_DATA_LOG_DIR: /datalog
+      ZOO_LOG_DIR: /logs/zookeeper
+      ZOO_TICK_TIME: 2000
+      ZOO_INIT_LIMIT: 5
+      ZOO_SYNC_LIMIT: 2
+      ZOO_CLIENT_PORT: 2182
+      ZOO_AUTOPURGE_PURGEINTERVAL: 0
+      ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
+      ZOO_MAX_CLIENT_CNXNS: 60
+      ZOO_STANDALONE_ENABLED: true
+      ZOO_ADMINSERVER_ENABLED: true
+      ALLOW_ANONYMOUS_LOGIN: true
   kafka:
-    container_name: kafka-stream
+    container_name: kafka
     image: wurstmeister/kafka
     ports:
       - "9094:9094"
       - "9092:9092"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       DOCKER_API_VERSION: 1.22
       KAFKA_ADVERTISED_HOST_NAME: 18.232.169.254
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 6
+      KAFKA_LOG_DIR: /logs/kafka
+      KAFKA_NUM_PARTITIONS: 8
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_MIN_INSYNC_REPLICAS: 2
+      KAFKA_LOG_RETENTION_HOURS: 168
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+      KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 300000
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2182
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://18.232.169.254:9094
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeperStream

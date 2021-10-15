@@ -9,7 +9,6 @@ volumes:
   router_var: {}
   druid_shared: {}
 
-
 services:
   postgres:
     container_name: postgres
@@ -22,7 +21,7 @@ services:
       - POSTGRES_PASSWORD=FoolishPassword
       - POSTGRES_USER=druid
       - POSTGRES_DB=druid
-
+ 
   # Need 3.5 or later for container nodes
   zookeeper:
     container_name: zookeeper
@@ -32,25 +31,6 @@ services:
     environment:
       ZOO_MY_ID: 1
       ALLOW_ANONYMOUS_LOGIN: 'yes'
-
-  kafka:
-    container_name: kafka
-    image: wurstmeister/kafka
-    ports:
-      - "9094:9094"
-      - "9092:9092"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      DOCKER_API_VERSION: 1.22
-      KAFKA_ADVERTISED_HOST_NAME: 18.232.169.254
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://18.232.169.254:9094
-      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-    depends_on:
-      - zookeeper
 
   coordinator:
     image: apache/druid:0.22.0
