@@ -3,10 +3,10 @@
   "spec": {
     "ioConfig": {
       "type": "kafka",
-      "topic": "transactions",
       "consumerProperties": {
         "bootstrap.servers": "18.232.169.254:9094"
       },
+      "topic": "transactions",
       "inputFormat": {
         "type": "json"
       },
@@ -43,7 +43,7 @@
         ]
       },
       "granularitySpec": {
-        "queryGranularity": "hour",
+        "queryGranularity": "fifteen_minute",
         "rollup": false,
         "segmentGranularity": "hour"
       }
