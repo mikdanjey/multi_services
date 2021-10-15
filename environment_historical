@@ -24,24 +24,25 @@ druid_lookup_enableLookupSyncOnStartup=false
 #################### Common Functions Done #####################
 
 # Java tuning
-druid_indexer_runner_javaOptsArray=["-server", "-Xms8g", "-Xmx8g", "-XX:MaxDirectMemorySize=5g", "-XX:+ExitOnOutOfMemoryError", "-XX:+UseG1GC", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=var/tmp", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
+druid_indexer_runner_javaOptsArray=["-server", "-Xms8g", "-Xmx8g", "-XX:MaxDirectMemorySize=13g", "-XX:+ExitOnOutOfMemoryError", "-XX:+UseG1GC", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=var/tmp", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
 
 # HTTP server settings
 druid_server_http_numThreads=60
 
-# HTTP client settings
-druid_broker_http_numConnections=50
-druid_broker_http_maxQueuedBytes=10MiB
-
 # Processing threads and buffers
 druid_processing_buffer_sizeBytes=500MiB
 druid_processing_numMergeBuffers=4
-druid_processing_numThreads=1
-druid_processing_tmpDir=var/druid/processing
+druid_processing_numThreads=15
+druid_processing_tmpDir=/var/druid/processing
 
-# Query cache disabled -- push down caching and merging instead
-druid_broker_cache_useCache=false
-druid_broker_cache_populateCache=false
+# Segment storage
+druid_segmentCache_locations=[{"path":"/var/druid/segment-cache","maxSize":"70g"}]
+
+# Query cache
+druid_historical_cache_useCache=true
+druid_historical_cache_populateCache=true
+druid_cache_type=caffeine
+druid_cache_sizeInBytes=256MiB
 
 # Extras
 druid_auth_allowUnauthenticatedHttpOptions=true
