@@ -4,7 +4,7 @@
     "ioConfig": {
       "type": "kafka",
       "consumerProperties": {
-        "bootstrap.servers": "localhost:9094"
+        "bootstrap.servers": "18.232.169.254:9094"
       },
       "topic": "transactions",
       "inputFormat": {
@@ -32,11 +32,15 @@
           {
             "type": "double",
             "name": "amount"
+          },
+          {
+            "type": "long",
+            "name": "index"
           }
         ]
       },
       "granularitySpec": {
-        "queryGranularity": "none",
+        "queryGranularity": "hour",
         "rollup": false,
         "segmentGranularity": "all"
       }
