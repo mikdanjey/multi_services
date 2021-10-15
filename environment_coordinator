@@ -24,24 +24,19 @@ druid_lookup_enableLookupSyncOnStartup=false
 #################### Common Functions Done #####################
 
 # Java tuning
-druid_indexer_runner_javaOptsArray=["-server", "-Xms8g", "-Xmx8g", "-XX:MaxDirectMemorySize=5g", "-XX:+ExitOnOutOfMemoryError", "-XX:+UseG1GC", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=var/tmp", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
+druid_indexer_runner_javaOptsArray=["-server", "-Xms9g", "-Xmx9g", "-XX:+ExitOnOutOfMemoryError", "-XX:+UseG1GC", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=var/tmp", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
 
-# HTTP server settings
-druid_server_http_numThreads=60
+druid_coordinator_startDelay=PT10S
+druid_coordinator_period=PT5S
 
-# HTTP client settings
-druid_broker_http_numConnections=50
-druid_broker_http_maxQueuedBytes=10MiB
+# Run the overlord service in the coordinator process
+druid_coordinator_asOverlord_enabled=true
+druid_coordinator_asOverlord_overlordService=druid/overlord
 
-# Processing threads and buffers
-druid_processing_buffer_sizeBytes=500MiB
-druid_processing_numMergeBuffers=4
-druid_processing_numThreads=1
-druid_processing_tmpDir=var/druid/processing
+druid_indexer_queue_startDelay=PT5S
 
-# Query cache disabled -- push down caching and merging instead
-druid_broker_cache_useCache=false
-druid_broker_cache_populateCache=false
+druid_indexer_runner_type=remote
+druid_indexer_storage_type=metadata
 
 # Extras
 druid_auth_allowUnauthenticatedHttpOptions=true
