@@ -41,7 +41,7 @@ class App extends Component {
     var ex = this.ply()
       // Define the external in scope with a filter on time and language
       .apply("transactions",
-        this.$('transactions').filter(this.$("time").in({
+        this.$('transactions').filter(this.$("transactionDate").in({
           start: new Date("2020-01-01T00:00:00Z"),
           end: new Date("2021-10-01T00:00:00Z")
         }))
@@ -66,7 +66,7 @@ class App extends Component {
     var ex = this.ply()
       // Define the external in scope with a filter on time and language
       .apply("transactions",
-        this.$('transactions').filter(this.$("time").in({
+        this.$('transactions').filter(this.$("transactionDate").in({
           start: new Date("2021-09-01T00:00:00Z"),
           end: new Date("2021-09-30T00:00:00Z")
         }))

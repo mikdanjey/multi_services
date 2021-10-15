@@ -3,24 +3,26 @@
   "spec": {
     "ioConfig": {
       "type": "kafka",
+      "topic": "transactions",
       "consumerProperties": {
         "bootstrap.servers": "18.232.169.254:9094"
       },
-      "topic": "transactions",
       "inputFormat": {
         "type": "json"
       },
       "useEarliestOffset": true
     },
     "tuningConfig": {
-      "type": "kafka"
+      "type": "kafka",
+      "maxRowsInMemory": 2000000
     },
     "dataSchema": {
       "dataSource": "transactions",
       "timestampSpec": {
-        "column": "transactionDate",
-        "format": "iso"
+        "column": "!!!_no_such_column_!!!",
+        "missingValue": "2010-01-01T00:00:00Z"
       },
+      "transformSpec": {},
       "dimensionsSpec": {
         "dimensions": [
           "transactionId",
@@ -33,6 +35,7 @@
             "type": "double",
             "name": "amount"
           },
+          "transactionDate",
           {
             "type": "long",
             "name": "index"
@@ -42,7 +45,7 @@
       "granularitySpec": {
         "queryGranularity": "hour",
         "rollup": false,
-        "segmentGranularity": "all"
+        "segmentGranularity": "hour"
       }
     }
   }
