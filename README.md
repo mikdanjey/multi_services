@@ -13,6 +13,9 @@ Druid UI: http://18.232.169.254:8888
 
 Analytics UI: http://18.232.169.254:5000
 
+git pull origin develop
+docker-compose up
+docker-compose up -d
 docker-compose down
 docker volume prune
 
