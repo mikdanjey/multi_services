@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.1'
 services:
   zookeeper1:
     container_name: zookeeper1
@@ -17,11 +17,10 @@ services:
       ZOO_AUTOPURGE_PURGEINTERVAL: 0
       ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
       ZOO_MAX_CLIENT_CNXNS: 60
-      ZOO_clientPort: 2182
-      ZOO_CLIENT_Port: 2182
       ZOO_AUDIT_ENABLE: 'true'
       ZOO_ADMINSERVER_ENABLED: 'true'
       ALLOW_ANONYMOUS_LOGIN: 'true'
+      ZOO_CFG_EXTRA: "clientPort=2182"
   kafka:
     container_name: kafka
     image: wurstmeister/kafka
