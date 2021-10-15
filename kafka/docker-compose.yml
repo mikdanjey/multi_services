@@ -1,10 +1,10 @@
 version: '3.9'
 services:
-  zookeeperStream:
-    container_name: zookeeperStream
+  zookeeper1:
+    container_name: zookeeper1
     image: wurstmeister/zookeeper
     ports:
-      - "2181:2182"
+      - "2182:2181"
     environment:
       ZOO_MY_ID: 6
       ZOO_CONF_DIR: /conf
@@ -14,7 +14,8 @@ services:
       ZOO_TICK_TIME: 2000
       ZOO_INIT_LIMIT: 10
       ZOO_SYNC_LIMIT: 5
-      ZOO_CLIENT_PORT: 2181
+      ZOO_CLIENT_PORT: 2182
+      ZOO_CLIENTPORT: 2182
       ZOO_AUTOPURGE_PURGEINTERVAL: 0
       ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
       ZOO_MAX_CLIENT_CNXNS: 60
@@ -40,10 +41,10 @@ services:
       KAFKA_LOG_RETENTION_HOURS: 168
       KAFKA_LOG_SEGMENT_BYTES: 1073741824
       KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 300000
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2182
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2182
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://18.232.169.254:9094
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
     depends_on:
-      - zookeeperStream
+      - zookeeper1
