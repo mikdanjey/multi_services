@@ -3,7 +3,9 @@ druid_emitter_logging_logLevel=debug
 
 druid_extensions_loadList=["kafka-emitter", "druid-histogram", "druid-datasketches", "druid-kafka-extraction-namespace", "druid-kafka-indexing-service", "druid-lookups-cached-global", "postgresql-metadata-storage"]
 
+# Zookeeper
 druid_zk_service_host=zookeeper
+druid_zk_paths_base=/druid
 
 druid_coordinator_balancer_strategy=cachingCost
 
@@ -11,9 +13,7 @@ druid_indexer_runner_javaOptsArray=["-server", "-Xmx1g", "-Xms1g", "-XX:MaxDirec
 druid_indexer_fork_property_druid_processing_buffer_sizeBytes=524288000
 
 druid_storage_type=local
-druid_storage_storageDirectory=/var/druid/segments
 druid_indexer_logs_type=file
-druid_indexer_logs_directory=/var/data/indexing-logs
 
 druid_processing_numThreads=2
 druid_processing_numMergeBuffers=6
