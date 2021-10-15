@@ -1,7 +1,7 @@
 
 # Java tuning
-DRUID_XMX=2g
-DRUID_XMS=2g
+DRUID_XMX=1g
+DRUID_XMS=1g
 DRUID_MAXNEWSIZE=512m
 DRUID_NEWSIZE=512m
 DRUID_MAXDIRECTMEMORYSIZE=10240m
@@ -20,16 +20,16 @@ druid_metadata_storage_connector_password=druid
 
 druid_coordinator_balancer_strategy=cachingCost
 
-druid_indexer_runner_javaOptsArray=["-server", "-Xmx2g", "-Xms2g", "-XX:MaxDirectMemorySize=4g", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
+druid_indexer_runner_javaOptsArray=["-server", "-Xmx1g", "-Xms1g", "-XX:MaxDirectMemorySize=128m", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
 druid_indexer_fork_property_druid_processing_buffer_sizeBytes=524288000
 
 druid_storage_type=local
-druid_storage_storageDirectory=/opt/data/segments
+druid_storage_storageDirectory=/var/druid/segments
 druid_indexer_logs_type=file
-druid_indexer_logs_directory=/opt/data/indexing-logs
+druid_indexer_logs_directory=/var/data/indexing-logs
 
-druid_processing_numThreads=4
-druid_processing_numMergeBuffers=4
+druid_processing_numThreads=2
+druid_processing_numMergeBuffers=6
 druid_auth_allowUnauthenticatedHttpOptions=true
 
 DRUID_LOG4J=<?xml version="1.0" encoding="UTF-8" ?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console"/></Root><Logger name="org.apache.druid.jetty.RequestLog" additivity="false" level="DEBUG"><AppenderRef ref="Console"/></Logger></Loggers></Configuration>
