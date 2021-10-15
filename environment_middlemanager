@@ -25,13 +25,12 @@ druid_lookup_enableLookupSyncOnStartup=false
 #################### Common Functions Done #####################
 
 # Java tuning
-druid_indexer_runner_javaOptsArray=["-server", "-Xms512m", "-Xmx512m", "-XX:+ExitOnOutOfMemoryError", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=var/tmp", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
+druid_indexer_runner_javaOptsArray=["-server", "-Xms512m", "-Xmx512m", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
 
 # Number of tasks per middleManager
 druid_worker_capacity=2
 
 # Task launch parameters
-druid_indexer_runner_javaOpts=["-server", "-Xms512m", "-Xmx512m", "-XX:MaxDirectMemorySize=1g", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-XX:+ExitOnOutOfMemoryError", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
 druid_indexer_task_baseTaskDir=var/druid/task
 
 # HTTP server threads
