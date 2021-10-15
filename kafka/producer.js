@@ -44,7 +44,7 @@ async function produce() {
                                     transactionDate: generateRandomDate(),
                                     index: index,
                                 }),
-                                partition: CLOUD_KAFKA_MAX_PARTITION
+                                partition: Math.floor(Math.random() * CLOUD_KAFKA_MAX_PARTITION)
                             },
                         ],
                     });
