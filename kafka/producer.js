@@ -28,7 +28,7 @@ async function produce() {
     if (index <= 1100000) {
         setInterval(async () => {
             try {
-                for (let i = 1; i <= 12; i++) {
+                for (let i = 1; i <= 100; i++) {
                     const producedData = await producer.send({
                         topic: CLOUD_KAFKA_TOPIC,
                         messages: [
