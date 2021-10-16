@@ -2,11 +2,11 @@
   "name": "ui-analytics",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://18.232.169.254:8888",
   "dependencies": {
+    "axios": "^0.23.0",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.1",
-    "plywood": "^0.26.5",
-    "plywood-druid-requester": "^2.6.11",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
