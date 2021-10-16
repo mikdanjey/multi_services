@@ -59,9 +59,9 @@ async function produce() {
                 // await producer.disconnect();
             }
         } else {
-            console.log("Done");
-            // await producer.disconnect();
+            await producer.disconnect();
             clearInterval(refreshIntervalId);
+            console.log("Done");
         }
     }, 1000);
 }
