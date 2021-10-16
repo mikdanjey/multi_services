@@ -9,29 +9,7 @@ DRUID_NEWSIZE=250m
 DRUID_MAXDIRECTMEMORYSIZE=6172m
 druid_indexer_fork_property_druid_processing_buffer_sizeBytes=256MiB
 
-druid_extensions_loadList=["druid-basic-security", 
-"druid-bloom-filter", 
-"druid-datasketches", 
-"druid-hdfs-storage", 
-"druid-histogram", 
-"druid-parquet-extensions",
-"druid-kafka-extraction-namespace", 
-"druid-kafka-indexing-service", 
-"druid-kinesis-indexing-service", 
-"druid-lookups-cached-global", 
-"druid-lookups-cached-single",
-"druid-orc-extensions", 
-"druid-stats", 
-"druid-time-min-max", 
-"druid-redis-cache", 
-"materialized-view-selection, materialized-view-maintenance", 
-"gce-extensions", 
-"druid-momentsketch", 
-"druid-tdigestsketch", 
-"kafka-emitter",
-"postgresql-metadata-storage",
-"druid-lookups-cached-global"
-]
+druid_extensions_loadList=["druid-basic-security", "druid-bloom-filter", "druid-datasketches", "druid-hdfs-storage", "druid-histogram", "druid-parquet-extensions", "druid-kafka-extraction-namespace", "druid-kafka-indexing-service", "druid-kinesis-indexing-service", "druid-lookups-cached-global", "druid-lookups-cached-single", "druid-orc-extensions", "druid-stats", "druid-time-min-max", "druid-redis-cache", "materialized-view-selection, materialized-view-maintenance", "gce-extensions", "druid-momentsketch", "druid-tdigestsketch", "kafka-emitter", "postgresql-metadata-storage", "druid-lookups-cached-global" ]
 
 # Logging
 # Log all runtime properties on startup. Disable to avoid logging properties on startup:
