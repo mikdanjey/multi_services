@@ -9,9 +9,7 @@ DRUID_NEWSIZE=250m
 DRUID_MAXDIRECTMEMORYSIZE=6172m
 druid_indexer_fork_property_druid_processing_buffer_sizeBytes=256MiB
 
-druid_extensions_loadList=["druid-avro-extensions", 
-"druid-azure-extensions", 
-"druid-basic-security", 
+druid_extensions_loadList=["druid-basic-security", 
 "druid-bloom-filter", 
 "druid-datasketches", 
 "druid-hdfs-storage", 
