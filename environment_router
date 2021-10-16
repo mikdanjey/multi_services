@@ -17,9 +17,11 @@ druid_metadata_storage_connector_connectURI=jdbc:postgresql://postgres:5432/drui
 druid_metadata_storage_connector_user=druid
 druid_metadata_storage_connector_password=druid
 
-# storage type
+# Deep storage with HDFS
 druid_storage_type=hdfs
 druid_storage_storageDirectory=/druid/segments
+druid_indexer_logs_type=hdfs
+druid_indexer_logs_directory=/druid/indexing-logs
 
 # Monitoring
 druid_monitoring_monitors=["org.apache.druid.java.util.metrics.JvmMonitor"]
