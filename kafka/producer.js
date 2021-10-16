@@ -58,12 +58,10 @@ async function produce() {
                 clearInterval(refreshIntervalId);
             }
         } else {
-            clearInterval(refreshIntervalId);
             console.log("Done");
+            clearInterval(refreshIntervalId);
         }
     }, 1000);
-    console.log("disconnect");
-    await producer.disconnect();
 }
 
 getRandom = (name = "Sample", count = 0) => {
