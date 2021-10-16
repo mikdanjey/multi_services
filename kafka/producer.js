@@ -26,33 +26,32 @@ async function produce() {
     let index = 1;
     // after the produce has connected, we start an interval timer
     let refreshIntervalId = setInterval(async () => {
-        if (index < 1000000) { // 1125900 <= 1100000 // false
+        if (index < 10000) { // 1125900 <= 1100000 // false
             try {
+                let messages = [];
                 for (let i = 1; i <= 100; i++) {
-                    const producedData = await producer.send({
-                        topic: CLOUD_KAFKA_TOPIC,
-                        messages: [
-                            {
-                                value: JSON.stringify({
-                                    transactionId: uuidv4(),
-                                    customerId: getRandom("Customer", 10),
-                                    ownerId: getRandom("OwnerId", 10),
-                                    channel: getRandom("Channel", 4),
-                                    deviceType: getRandom("Device Type", 4),
-                                    tpn: getRandom("TPN", 1000),
-                                    amount: getRandomAmount(),
-                                    transactionDate: generateRandomDate(),
-                                    index: index,
-                                }),
-                                // partition: 1,
-                                partition: Math.floor(Math.random() * CLOUD_KAFKA_MAX_PARTITION),
-                            },
-                        ],
+                    messages.push({
+                        value: JSON.stringify({
+                            transactionId: uuidv4(),
+                            customerId: getRandom("Customer", 10),
+                            ownerId: getRandom("OwnerId", 10),
+                            channel: getRandom("Channel", 4),
+                            deviceType: getRandom("Device Type", 4),
+                            tpn: getRandom("TPN", 1000),
+                            amount: getRandomAmount(),
+                            transactionDate: generateRandomDate(),
+                            index: `${index}-${i}`,
+                        }),
+                        partition: Math.floor(Math.random() * CLOUD_KAFKA_MAX_PARTITION),
                     });
-                    // if the message is written successfully, log it and increment `i`
-                    console.log(`Produced ${index} data ${JSON.stringify(producedData)}`);
-                    index++;
                 }
+                const producedData = await producer.send({
+                    topic: CLOUD_KAFKA_TOPIC,
+                    messages
+                });
+                // if the message is written successfully, log it and increment `i`
+                console.log(`Produced ${index} data ${JSON.stringify(producedData)}`);
+                index++;
             } catch (err) {
                 console.error("could not write message " + err);
                 clearInterval(refreshIntervalId);
