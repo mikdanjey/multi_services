@@ -54,16 +54,16 @@ async function produce() {
                     index++;
                 }
             } catch (err) {
-                clearInterval(refreshIntervalId);
                 console.error("could not write message " + err);
-                // await producer.disconnect();
+                clearInterval(refreshIntervalId);
             }
         } else {
-            await producer.disconnect();
             clearInterval(refreshIntervalId);
             console.log("Done");
         }
     }, 1000);
+    console.log("disconnect");
+    await producer.disconnect();
 }
 
 getRandom = (name = "Sample", count = 0) => {
