@@ -32,6 +32,14 @@ docker container ls
 
 docker exec -it kafka bash
 
+docker exec -it broker /opt/druid/var
+docker exec -it historical bash
+docker exec -it middlemanager bash
+docker exec -it router bash
+docker exec -it coordinator bash
+docker exec -it zookeeper bash
+
+
 ## Goto Kafka location
 cd /opt/kafka
 

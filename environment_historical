@@ -19,9 +19,9 @@ druid_metadata_storage_connector_password=druid
 
 # Deep storage with HDFS
 druid_storage_type=hdfs
-druid_storage_storageDirectory=segments
 druid_indexer_logs_type=hdfs
-druid_indexer_logs_directory=indexing-logs
+druid_storage_storageDirectory=/opt/shared/segments
+druid_indexer_logs_directory=/opt/shared/indexing-logs
 
 # Monitoring
 druid_monitoring_monitors=["org.apache.druid.java.util.metrics.JvmMonitor"]
