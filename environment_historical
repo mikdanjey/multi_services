@@ -13,13 +13,9 @@ druid_metadata_storage_connector_connectURI=jdbc:postgresql://postgres:5432/drui
 druid_metadata_storage_connector_user=druid
 druid_metadata_storage_connector_password=druid
 
-# For local disk (only viable in a cluster if this is a network mount):
-druid_storage_type=local
-druid_storage_storageDirectory=var/druid/segments
-
-# For local disk (only viable in a cluster if this is a network mount):
-druid_indexer_logs_type=file
-druid_indexer_logs_directory=var/data/indexing-logs
+# storage type
+druid_storage_type=hdfs
+druid_storage_storageDirectory=/druid/segments
 
 # SQL
 druid_sql_enable=true
