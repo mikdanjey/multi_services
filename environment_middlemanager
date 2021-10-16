@@ -1,7 +1,43 @@
 
 DRUID_LOG4J=<?xml version="1.0" encoding="UTF-8"?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n" /></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console" /></Root><Logger name="org.apache.druid.server.QueryLifecycle" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.server.coordinator" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.segment" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.initialization" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.skife.config" level="warn" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="com.sun.jersey.guice" level="warn" additivity="false"><Appender-ref ref="Console" /></Logger></Loggers></Configuration>
 
-druid_extensions_loadList=["kafka-emitter", "postgresql-metadata-storage", "druid-histogram", "druid-datasketches", "druid-kafka-extraction-namespace", "druid-kafka-indexing-service", "druid-lookups-cached-global", "postgresql-metadata-storage"]
+# Java tuning
+DRUID_XMX=1g
+DRUID_XMS=1g
+DRUID_MAXNEWSIZE=250m
+DRUID_NEWSIZE=250m
+DRUID_MAXDIRECTMEMORYSIZE=6172m
+druid_indexer_fork_property_druid_processing_buffer_sizeBytes=256MiB
+
+druid_extensions_loadList=["druid-avro-extensions", 
+"druid-azure-extensions", 
+"druid-basic-security", 
+"druid-bloom-filter", 
+"druid-datasketches", 
+"druid-hdfs-storage", 
+"druid-histogram", 
+"druid-parquet-extensions",
+"druid-kafka-extraction-namespace", 
+"druid-kafka-indexing-service", 
+"druid-kinesis-indexing-service", 
+"druid-lookups-cached-global", 
+"druid-lookups-cached-single",
+"druid-orc-extensions", 
+"druid-stats", 
+"druid-time-min-max", 
+"druid-redis-cache", 
+"materialized-view-selection, materialized-view-maintenance", 
+"gce-extensions", 
+"druid-momentsketch", 
+"druid-tdigestsketch", 
+"kafka-emitter",
+"postgresql-metadata-storage",
+"druid-lookups-cached-global"
+]
+
+# Logging
+# Log all runtime properties on startup. Disable to avoid logging properties on startup:
+druid_startup_logging_logProperties=true
 
 # Zookeeper
 druid_zk_service_host=zookeeper
@@ -16,6 +52,11 @@ druid_metadata_storage_connector_password=druid
 # storage type
 druid_storage_type=hdfs
 druid_storage_storageDirectory=/druid/segments
+
+# Monitoring
+druid_monitoring_monitors=["org.apache.druid.java.util.metrics.JvmMonitor"]
+druid_emitter=noop
+druid_emitter_logging_logLevel=info
 
 # SQL
 druid_sql_enable=true
