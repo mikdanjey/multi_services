@@ -48,7 +48,10 @@ druid_segmentCache_locations=[{"path":"var/druid/segment-cache","maxSize":"60g"}
 druid_historical_cache_useCache=true
 druid_historical_cache_populateCache=true
 druid_cache_type=caffeine
-druid_cache_sizeInBytes=256MiB
+druid_cache_sizeInBytes=500MiB
 
 # Extras
 druid_auth_allowUnauthenticatedHttpOptions=true
+
+druid_query_groupBy_maxOnDiskStorage=4
+druid_query_groupBy_maxMergingDictionarySize=300000000
