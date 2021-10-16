@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node producer.js",
     "producer": "node producer.js",
-    "consumer": "node consumer.js"
+    "consumer": "node consumer.js",
+    "test": "node test.js"
   },
   "keywords": [],
   "author": "",
