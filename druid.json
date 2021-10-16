@@ -45,7 +45,7 @@
       "granularitySpec": {
         "queryGranularity": "fifteen_minute",
         "rollup": false,
-        "segmentGranularity": "hour"
+        "segmentGranularity": "all"
       }
     }
   }
