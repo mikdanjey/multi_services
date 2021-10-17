@@ -13,6 +13,7 @@ class Dashboard1 extends Component {
       isWidgetLoaderVisible1: true,
     }
     this.baseURL = `/druid/v2/sql`;
+
   }
 
   sleeper = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
@@ -20,21 +21,48 @@ class Dashboard1 extends Component {
   componentDidMount() {
   }
 
+  getMonth = (year, month) => {
+    const months = ["", "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+    return `${year} ${months[month]}`;
+  }
+
   getDruidWidget1 = async () => {
     const thisClass = this;
-    await thisClass.sleeper(100);
+    // await thisClass.sleeper(100);
     thisClass.setState({ isWidgetLoaderVisible1: true });
-    axios.post(this.baseURL,
-      {
-        query: "SELECT amount, customerId FROM transactions LIMIT 10"
-      })
-      .then(response => {
-        thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1: response.data });
-      })
-      .catch(error => {
-        thisClass.setState({ isWidgetLoaderVisible1: true });
-        console.error('There was an error!', error);
+    let response = [];
+    let widgetData1 = [];
+    try {
+      response = await axios.post(this.baseURL, {
+        query: `
+        SELECT EXTRACT(Month FROM __time) as "Per Month", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2020-12-31'
+        GROUP BY 1
+        ORDER BY 1 ASC
+        `
       });
+      widgetData1 = response.data;
+      widgetData1 = widgetData1.map((item) => {
+        return { "Per Month": this.getMonth(2020, item["Per Month"]), "Total Count": item["Total Count"], "Total Volume": item["Total Volume"] }
+      });
+      response = await axios.post(this.baseURL, {
+        query: `
+        SELECT EXTRACT(Month FROM __time) as "Per Month", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        FROM transactions WHERE __time BETWEEN '2021-01-01' AND '2021-12-31'
+        GROUP BY 1
+        ORDER BY 1 ASC
+        `
+      });
+      let temp = response.data.map((item) => {
+        return { "Per Month": this.getMonth(2021, item["Per Month"]), "Total Count": item["Total Count"], "Total Volume": item["Total Volume"] }
+      });
+      widgetData1 = widgetData1.concat(temp);
+      thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1 });
+    } catch (error) {
+      thisClass.setState({ isWidgetLoaderVisible1: true });
+      console.error('There was an error!', error);
+    }
   }
 
   render() {

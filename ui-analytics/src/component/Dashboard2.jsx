@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
-import { JsonToTable } from "react-json-to-table";
 import Loader from "react-loader-spinner";
 
 class Dashboard2 extends Component {

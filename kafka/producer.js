@@ -35,11 +35,11 @@ async function produce() {
     let index = 1;
     // after the produce has connected, we start an interval timer
     let refreshIntervalId = setInterval(async () => {
-        if (index <= 10000) { // 1125900 <= 1100000 // false
+        if (index <= 1000) { // 1125900 <= 1100000 // false
             try {
                 let messages = [];
                 let partition = Math.floor(Math.random() * CLOUD_KAFKA_MAX_PARTITION);
-                for (let i = 1; i <= 100; i++) {
+                for (let i = 1; i <= 1000; i++) {
                     messages.push({
                         value: JSON.stringify({
                             transactionId: uuidv4(),
@@ -69,7 +69,7 @@ async function produce() {
             }
         } else {
             console.log("Done");
-            // clearInterval(refreshIntervalId);
+            clearInterval(refreshIntervalId);
         }
     }, 1000);
 }

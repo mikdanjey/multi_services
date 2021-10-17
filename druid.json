@@ -19,10 +19,9 @@
     "dataSchema": {
       "dataSource": "transactions",
       "timestampSpec": {
-        "column": "!!!_no_such_column_!!!",
-        "missingValue": "2010-01-01T00:00:00Z"
+        "column": "transactionDate",
+        "format": "iso"
       },
-      "transformSpec": {},
       "dimensionsSpec": {
         "dimensions": [
           "transactionId",
@@ -35,17 +34,13 @@
             "type": "double",
             "name": "amount"
           },
-          "transactionDate",
-          {
-            "type": "long",
-            "name": "index"
-          }
+          "index"
         ]
       },
       "granularitySpec": {
-        "queryGranularity": "fifteen_minute",
+        "queryGranularity": "hour",
         "rollup": false,
-        "segmentGranularity": "all"
+        "segmentGranularity": "hour"
       }
     }
   }
