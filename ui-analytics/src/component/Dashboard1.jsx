@@ -48,8 +48,8 @@ class Dashboard1 extends Component {
         ORDER BY 1 ASC
         `
       });
-     
-      thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1: response.data });
+      widgetData1 = response.data;
+      thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1: widgetData1 });
     } catch (error) {
       thisClass.setState({ isWidgetLoaderVisible1: true });
       console.error('There was an error!', error);
@@ -65,28 +65,16 @@ class Dashboard1 extends Component {
     try {
       response = await axios.post(this.baseURL, {
         query: `
-        SELECT EXTRACT(Month FROM __time) as "Per Month", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
-        FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2020-12-31'
-        GROUP BY 1
+        SELECT EXTRACT(YEAR FROM __time) as "Per Year", EXTRACT(Month FROM __time) as "Per Month", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2021-12-31'
+        GROUP BY 1,2
         ORDER BY 1 ASC
         `
       });
       widgetData2 = response.data;
       widgetData2 = widgetData2.map((item) => {
-        return { "Per Month": this.getMonth(2020, item["Per Month"]), "Total Count": item["Total Count"], "Total Volume": item["Total Volume"] }
+        return { "Per Month": this.getMonth(item["Per Year"], item["Per Month"]), "Total Count": item["Total Count"], "Total Volume": item["Total Volume"] }
       });
-      response = await axios.post(this.baseURL, {
-        query: `
-        SELECT EXTRACT(Month FROM __time) as "Per Month", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
-        FROM transactions WHERE __time BETWEEN '2021-01-01' AND '2021-12-31'
-        GROUP BY 1
-        ORDER BY 1 ASC
-        `
-      });
-      let temp = response.data.map((item) => {
-        return { "Per Month": this.getMonth(2021, item["Per Month"]), "Total Count": item["Total Count"], "Total Volume": item["Total Volume"] }
-      });
-      widgetData2 = widgetData2.concat(temp);
       thisClass.setState({ isWidgetLoaderVisible2: false, widgetData2 });
     } catch (error) {
       thisClass.setState({ isWidgetLoaderVisible2: true });
