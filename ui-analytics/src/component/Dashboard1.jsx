@@ -174,7 +174,7 @@ class Dashboard1 extends Component {
                 <Card.Header>
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title">First Data Point</h5>
+                      <h5 className="card-title">By Yearly Data</h5>
                     </div>
                     <div className="col text-end">
                       <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
@@ -201,10 +201,10 @@ class Dashboard1 extends Component {
                 <Card.Header>
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title">Second Data Point</h5>
+                      <h5 className="card-title">By Channel Data</h5>
                     </div>
                     <div className="col text-end">
-                      <Button onClick={this.getDruidWidget2} variant="primary">Get Data</Button>
+                      <Button onClick={this.getDruidWidget4} variant="primary">Get Data</Button>
                     </div>
                   </div>
                 </Card.Header>
@@ -214,10 +214,10 @@ class Dashboard1 extends Component {
                     color="#50C878"
                     height={100}
                     width={100}
-                    visible={isWidgetLoaderVisible2}
+                    visible={isWidgetLoaderVisible4}
                   />
-                  {!isWidgetLoaderVisible2 &&
-                    <JsonToTable json={widgetData2} />
+                  {!isWidgetLoaderVisible4 &&
+                    <JsonToTable json={widgetData4} />
                   }
                 </Card.Body>
               </Card>
@@ -228,7 +228,7 @@ class Dashboard1 extends Component {
                 <Card.Header>
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title">Third Data Point</h5>
+                      <h5 className="card-title">By Customer Data</h5>
                     </div>
                     <div className="col text-end">
                       <Button onClick={this.getDruidWidget3} variant="primary">Get Data</Button>
@@ -254,38 +254,13 @@ class Dashboard1 extends Component {
           <br />
           <Row>
 
+            
             <Col>
               <Card>
                 <Card.Header>
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title">Fourth Data Point</h5>
-                    </div>
-                    <div className="col text-end">
-                      <Button onClick={this.getDruidWidget4} variant="primary">Get Data</Button>
-                    </div>
-                  </div>
-                </Card.Header>
-                <Card.Body>
-                  <Loader
-                    type="Circles"
-                    color="#50C878"
-                    height={100}
-                    width={100}
-                    visible={isWidgetLoaderVisible4}
-                  />
-                  {!isWidgetLoaderVisible4 &&
-                    <JsonToTable json={widgetData4} />
-                  }
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col>
-              <Card>
-                <Card.Header>
-                  <div className="row">
-                    <div className="col">
-                      <h5 className="card-title">Fifth Data Point</h5>
+                      <h5 className="card-title">By Device Type Data</h5>
                     </div>
                     <div className="col text-end">
                       <Button onClick={this.getDruidWidget5} variant="primary">Get Data</Button>
@@ -302,6 +277,33 @@ class Dashboard1 extends Component {
                   />
                   {!isWidgetLoaderVisible5 &&
                     <JsonToTable json={widgetData5} />
+                  }
+                </Card.Body>
+              </Card>
+            </Col>
+            
+            <Col>
+              <Card>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">By Monthly Data</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget2} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
+                <Card.Body>
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible2}
+                  />
+                  {!isWidgetLoaderVisible2 &&
+                    <JsonToTable json={widgetData2} />
                   }
                 </Card.Body>
               </Card>
