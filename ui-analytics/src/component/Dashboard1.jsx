@@ -17,6 +17,9 @@ class Dashboard1 extends Component {
 
       widgetData3: [],
       isWidgetLoaderVisible3: true,
+
+      widgetData4: [],
+      isWidgetLoaderVisible4: true,
     }
     this.baseURL = `/druid/v2/sql`;
 
@@ -105,8 +108,31 @@ class Dashboard1 extends Component {
     }
   }
 
+  getDruidWidget4 = async () => {
+    const thisClass = this;
+    thisClass.setState({ isWidgetLoaderVisible4: true });
+    // await thisClass.sleeper(100);
+    let response = [];
+    let widgetData4 = [];
+    try {
+      response = await axios.post(this.baseURL, {
+        query: `
+        SELECT channel, COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2021-12-31'
+        GROUP BY 1
+        ORDER BY 1 ASC
+        `
+      });
+      widgetData4 = response.data;
+      thisClass.setState({ isWidgetLoaderVisible4: false, widgetData4 });
+    } catch (error) {
+      thisClass.setState({ isWidgetLoaderVisible4: true });
+      console.error('There was an error!', error);
+    }
+  }
+
   render() {
-    const { widgetData1, isWidgetLoaderVisible1, widgetData2, isWidgetLoaderVisible2, widgetData3, isWidgetLoaderVisible3, } = this.state;
+    const { widgetData1, isWidgetLoaderVisible1, widgetData2, isWidgetLoaderVisible2, widgetData3, isWidgetLoaderVisible3, widgetData4, isWidgetLoaderVisible4, } = this.state;
     return (
       <>
         <Container fluid style={{ padding: 20 }}>
@@ -193,9 +219,38 @@ class Dashboard1 extends Component {
             </Col>
 
           </Row>
+          <br />
+          <Row>
 
-
-
+            <Col>
+              <Card>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">Fourth Data Point</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget4} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
+                <Card.Body>
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible4}
+                  />
+                  {!isWidgetLoaderVisible4 &&
+                    <JsonToTable json={widgetData4} />
+                  }
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col></Col>
+            <Col></Col>
+          </Row>
 
         </Container>
       </>
