@@ -1,5 +1,6 @@
 const { Kafka, logLevel } = require('kafkajs');
 const { v4: uuidv4 } = require('uuid');
+const moment = require('moment');
 const faker = require('faker');
 
 const { CLOUD_KAFKA_MAX_PARTITION, CLOUD_KAFKA_TOPIC, CLOUD_KAFKA_BROKERS, CLOUD_KAFKA_USERNAME, CLOUD_KAFKA_PASSWORD, CLOUD_KAFKA_CLIENT_ID } = require("./config.js");
@@ -50,7 +51,7 @@ async function produce() {
                             amount: getRandomAmount(),
                             transactionDate: generateRandomDate(),
                             index: `${index}-${i}`,
-                            streamTime: nanoseconds(process.hrtime())
+                            // streamTime: nanoseconds(process.hrtime())
                         }),
                         partition,
                     });
@@ -83,15 +84,16 @@ getRandomAmount = () => {
     return parseFloat(`${(Math.floor(Math.random() * 100) + 50)}.${(Math.floor(Math.random() * 50) + 10)}`);
 }
 
-generateRandomDate = () => {
+function generateRandomDate() {
     const random = getRandomDate(new Date('2020-01-01'), new Date('2021-10-01'))
-    return random.toISOString();
+    return new Date(random);
 }
 
-getRandomDate = (from, to) => {
+function getRandomDate(from, to) {
     const fromTime = from.getTime();
     const toTime = to.getTime();
-    return new Date(fromTime + Math.random() * (toTime - fromTime));
+    const dateTime = new Date(fromTime + Math.random() * (toTime - fromTime));
+    return moment(dateTime).format('YYYY-MM-DD');
 }
 
 randomDate = (start, end, startHour, endHour) => {

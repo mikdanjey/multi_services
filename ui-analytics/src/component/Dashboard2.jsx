@@ -27,7 +27,10 @@ class Dashboard2 extends Component {
     thisClass.setState({ isWidgetLoaderVisible1: true });
     axios.post(this.baseURL,
       {
-        query: "SELECT amount, customerId, transactionDate FROM transactions LIMIT 50"
+        query: `
+        SELECT SUM(amount) as "Total Volume" FROM transactions 
+        WHERE transactionDate >= 2021-09-16T12:51:09.458Z - INTERVAL '1' DAY
+        `
       })
       .then(response => {
         thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1: JSON.stringify(response.data, null, 2) });
