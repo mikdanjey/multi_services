@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { JsonToTable } from "react-json-to-table";
-class Home extends Component {
+class Page1 extends Component {
 
   constructor(props) {
     super(props);
@@ -82,4 +82,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Page1;
