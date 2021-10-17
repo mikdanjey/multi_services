@@ -2,69 +2,87 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { JsonToTable } from "react-json-to-table";
+import Loader from "react-loader-spinner";
+
 class Dashboard2 extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      jsonAllData: [],
+      widgetData1: [],
+      isWidgetLoaderVisible1: true,
       jsonLastMonthData: [],
     }
     this.baseURL = `/druid/v2/sql`;
   }
 
+  sleeper = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+
   componentDidMount() {
-    // this.getDruidAllData();
-    // this.getDruidLastMonthData();
   }
 
-  getDruidAllData = () => {
+  getDruidWidget1 = async () => {
     const thisClass = this;
+    await thisClass.sleeper(100);
+    thisClass.setState({ isWidgetLoaderVisible1: true });
     axios.post(this.baseURL,
       {
-        query: "SELECT COUNT(*) AS TotalRecords FROM transactions"
+        query: "SELECT amount, customerId, transactionDate FROM transactions LIMIT 50"
       })
       .then(response => {
-        thisClass.setState({ jsonAllData: JSON.stringify(response.data, null, 2) });
+        thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1: JSON.stringify(response.data, null, 2) });
       })
       .catch(error => {
-        console.error('There was an error!', error);
-      });
-  }
-
-  getDruidLastMonthData = () => {
-    const thisClass = this;
-    axios.post(this.baseURL,
-      {
-        query: "SELECT amount, customerId FROM transactions LIMIT 10"
-      })
-      .then(response => {
-        thisClass.setState({ jsonLastMonthData: response.data });
-      })
-      .catch(error => {
+        thisClass.setState({ isWidgetLoaderVisible1: true });
         console.error('There was an error!', error);
       });
   }
 
   render() {
-    const { jsonAllData, jsonLastMonthData } = this.state;
+    const { widgetData1, isWidgetLoaderVisible1 } = this.state;
     return (
       <>
-        <Container fluid>
-          <br />
+        <Container fluid style={{ padding: 20 }}>
           <Row>
             <Col>
+
             </Col>
+
             <Col>
               <Card>
-                <Card.Header as="h5">Sample Data <Button onClick={this.getDruidLastMonthData} variant="primary">Get Data</Button></Card.Header>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">Sample Data</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
                 <Card.Body>
-                  <JsonToTable json={jsonLastMonthData} />
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible1}
+                  />
+                  {!isWidgetLoaderVisible1 &&
+                    <code>
+                      <pre>
+                        {widgetData1}
+                      </pre>
+                    </code>
+                  }
                 </Card.Body>
               </Card>
             </Col>
+
             <Col>
+
             </Col>
+
           </Row>
         </Container>
       </>

@@ -11,7 +11,6 @@ class Dashboard1 extends Component {
     this.state = {
       widgetData1: [],
       isWidgetLoaderVisible1: true,
-      jsonLastMonthData: [],
     }
     this.baseURL = `/druid/v2/sql`;
   }
@@ -30,7 +29,7 @@ class Dashboard1 extends Component {
         query: "SELECT amount, customerId FROM transactions LIMIT 10"
       })
       .then(response => {
-        thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1: JSON.stringify(response.data, null, 2) });
+        thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1: response.data });
       })
       .catch(error => {
         thisClass.setState({ isWidgetLoaderVisible1: true });
@@ -92,11 +91,7 @@ class Dashboard1 extends Component {
                     visible={isWidgetLoaderVisible1}
                   />
                   {!isWidgetLoaderVisible1 &&
-                    <code>
-                      <pre>
-                        {widgetData1}
-                      </pre>
-                    </code>
+                    <JsonToTable json={widgetData1} />
                   }
                 </Card.Body>
               </Card>
@@ -123,11 +118,7 @@ class Dashboard1 extends Component {
                     visible={isWidgetLoaderVisible1}
                   />
                   {!isWidgetLoaderVisible1 &&
-                    <code>
-                      <pre>
-                        {widgetData1}
-                      </pre>
-                    </code>
+                    <JsonToTable json={widgetData1} />
                   }
                 </Card.Body>
               </Card>
