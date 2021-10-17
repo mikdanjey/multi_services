@@ -35,8 +35,8 @@ class Dashboard1 extends Component {
 
   getDruidWidget1 = async () => {
     const thisClass = this;
-    // await thisClass.sleeper(100);
     thisClass.setState({ isWidgetLoaderVisible1: true });
+    // await thisClass.sleeper(100);
     let response = [];
     let widgetData1 = [];
     try {
@@ -59,7 +59,7 @@ class Dashboard1 extends Component {
   getDruidWidget2 = async () => {
     const thisClass = this;
     thisClass.setState({ isWidgetLoaderVisible2: true });
-    await thisClass.sleeper(100);
+    // await thisClass.sleeper(100);
     let response = [];
     let widgetData2 = [];
     try {
@@ -85,11 +85,19 @@ class Dashboard1 extends Component {
   getDruidWidget3 = async () => {
     const thisClass = this;
     thisClass.setState({ isWidgetLoaderVisible3: true });
-    await thisClass.sleeper(100);
+    // await thisClass.sleeper(100);
     let response = [];
     let widgetData3 = [];
     try {
-
+      response = await axios.post(this.baseURL, {
+        query: `
+        SELECT customerId, COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2021-12-31'
+        GROUP BY 1
+        ORDER BY 1 ASC
+        `
+      });
+      widgetData3 = response.data;
       thisClass.setState({ isWidgetLoaderVisible3: false, widgetData3 });
     } catch (error) {
       thisClass.setState({ isWidgetLoaderVisible3: true });
