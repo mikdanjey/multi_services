@@ -20,6 +20,9 @@ class Dashboard1 extends Component {
 
       widgetData4: [],
       isWidgetLoaderVisible4: true,
+
+      widgetData5: [],
+      isWidgetLoaderVisible5: true,
     }
     this.baseURL = `/druid/v2/sql`;
 
@@ -28,6 +31,12 @@ class Dashboard1 extends Component {
   sleeper = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
   componentDidMount() {
+    this.getDruidWidget1();
+    this.getDruidWidget2();
+    this.getDruidWidget3();
+    this.getDruidWidget4();
+    this.getDruidWidget5();
+
   }
 
   getMonth = (year, month) => {
@@ -94,7 +103,7 @@ class Dashboard1 extends Component {
     try {
       response = await axios.post(this.baseURL, {
         query: `
-        SELECT customerId, COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        SELECT customerId as "Customer", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
         FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2021-12-31'
         GROUP BY 1
         ORDER BY 1 ASC
@@ -117,7 +126,7 @@ class Dashboard1 extends Component {
     try {
       response = await axios.post(this.baseURL, {
         query: `
-        SELECT channel, COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        SELECT channel as "Channel", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
         FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2021-12-31'
         GROUP BY 1
         ORDER BY 1 ASC
@@ -131,8 +140,31 @@ class Dashboard1 extends Component {
     }
   }
 
+  getDruidWidget5 = async () => {
+    const thisClass = this;
+    thisClass.setState({ isWidgetLoaderVisible5: true });
+    // await thisClass.sleeper(100);
+    let response = [];
+    let widgetData5 = [];
+    try {
+      response = await axios.post(this.baseURL, {
+        query: `
+        SELECT deviceType as "Device Type", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2021-12-31'
+        GROUP BY 1
+        ORDER BY 1 ASC
+        `
+      });
+      widgetData5 = response.data;
+      thisClass.setState({ isWidgetLoaderVisible5: false, widgetData5 });
+    } catch (error) {
+      thisClass.setState({ isWidgetLoaderVisible5: true });
+      console.error('There was an error!', error);
+    }
+  }
+
   render() {
-    const { widgetData1, isWidgetLoaderVisible1, widgetData2, isWidgetLoaderVisible2, widgetData3, isWidgetLoaderVisible3, widgetData4, isWidgetLoaderVisible4, } = this.state;
+    const { widgetData1, isWidgetLoaderVisible1, widgetData2, isWidgetLoaderVisible2, widgetData3, isWidgetLoaderVisible3, widgetData4, isWidgetLoaderVisible4, widgetData5, isWidgetLoaderVisible5, } = this.state;
     return (
       <>
         <Container fluid style={{ padding: 20 }}>
@@ -248,7 +280,32 @@ class Dashboard1 extends Component {
                 </Card.Body>
               </Card>
             </Col>
-            <Col></Col>
+            <Col>
+              <Card>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">Fifth Data Point</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget5} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
+                <Card.Body>
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible5}
+                  />
+                  {!isWidgetLoaderVisible5 &&
+                    <JsonToTable json={widgetData5} />
+                  }
+                </Card.Body>
+              </Card>
+            </Col>
             <Col></Col>
           </Row>
 
