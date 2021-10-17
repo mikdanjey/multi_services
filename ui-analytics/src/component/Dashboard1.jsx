@@ -34,12 +34,12 @@ class Dashboard1 extends Component {
   sleeper = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
   componentDidMount() {
-    // this.getDruidWidget1();
-    // this.getDruidWidget2();
-    // this.getDruidWidget3();
-    // this.getDruidWidget4();
-    // this.getDruidWidget5();
-
+    this.getDruidWidget1();
+    this.getDruidWidget2();
+    this.getDruidWidget3();
+    this.getDruidWidget4();
+    this.getDruidWidget5();
+    this.getDruidWidget6();
   }
 
   getMonth = (year, month) => {
