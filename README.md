@@ -9,10 +9,20 @@ docker-compose up -d
 
 http://localhost:8888
 
-http://3.88.194.150:8888
+Druid UI: http://18.232.169.254:8888
 
-docker-compose down
-docker volume prune
+Analytics UI: http://18.232.169.254:5000
+
+git pull origin develop
+
+docker-compose up
+docker-compose up -d
+docker-compose down && docker volume prune
+
+
+rm -rf /home/ubuntu/.pm2/logs
+
+https://convertlive.com/u/convert/megabytes/to/bytes#500
 
 docker images
 
@@ -21,6 +31,14 @@ docker rmi adf2b126dda8 --force
 docker container ls
 
 docker exec -it kafka bash
+
+docker exec -it broker /opt/druid/var
+docker exec -it historical bash
+docker exec -it middlemanager bash
+docker exec -it router bash
+docker exec -it coordinator bash
+docker exec -it zookeeper bash
+
 
 ## Goto Kafka location
 cd /opt/kafka
@@ -76,6 +94,9 @@ https://github.com/apache/druid/blob/0.22.0/distribution/docker/docker-compose.y
 
 CORS: https://druid.apache.org/docs/latest/design/auth.html
 
+Memory: https://druid.apache.org/docs/latest/operations/basic-cluster-tuning.html
+
+Zookeeper Doc: https://hub.docker.com/_/zookeeper
 
 # Linus
 chrome --disable-web-security --user-data-dir=~/chromeTemp

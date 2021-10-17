@@ -1,24 +1,24 @@
 const { Kafka } = require("kafkajs");
-const { CLOUDKARAFKA_TOPIC, CLOUDKARAFKA_BROKERS, CLOUDKARAFKA_USERNAME, CLOUDKARAFKA_PASSWORD, CLOUDKARAFKA_CLIENT_ID, CLOUDKARAFKA_GROUP_ID } = require("./config.js");
+const { CLOUD_KAFKA_TOPIC, CLOUD_KAFKA_BROKERS, CLOUD_KAFKA_USERNAME, CLOUD_KAFKA_PASSWORD, CLOUD_KAFKA_CLIENT_ID, CLOUD_KAFKA_GROUP_ID } = require("./config.js");
 
 async function consume() {
     const kafka = new Kafka({
-        clientId: CLOUDKARAFKA_CLIENT_ID,
-        brokers: CLOUDKARAFKA_BROKERS,
+        clientId: CLOUD_KAFKA_CLIENT_ID,
+        brokers: CLOUD_KAFKA_BROKERS,
         // ssl: true,
         // sasl: {
         //     mechanism: 'scram-sha-256', // plain, scram-sha-256 or scram-sha-512
-        //     username: CLOUDKARAFKA_USERNAME,
-        //     password: CLOUDKARAFKA_PASSWORD,
+        //     username: CLOUD_KAFKA_USERNAME,
+        //     password: CLOUD_KAFKA_PASSWORD,
         // },
     });
 
-    const consumer = kafka.consumer({ groupId: CLOUDKARAFKA_GROUP_ID });
+    const consumer = kafka.consumer({ groupId: CLOUD_KAFKA_GROUP_ID });
     await consumer.connect();
     console.log("Consumer connected");
 
     await consumer.subscribe({
-        topic: CLOUDKARAFKA_TOPIC,
+        topic: CLOUD_KAFKA_TOPIC,
         fromBeginning: true,
     });
 

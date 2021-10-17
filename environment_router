@@ -1,0 +1,52 @@
+
+DRUID_LOG4J=<?xml version="1.0" encoding="UTF-8"?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n" /></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console" /></Root><Logger name="org.apache.druid.server.QueryLifecycle" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.server.coordinator" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.segment" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.apache.druid.initialization" level="info" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="org.skife.config" level="warn" additivity="false"><Appender-ref ref="Console" /></Logger><Logger name="com.sun.jersey.guice" level="warn" additivity="false"><Appender-ref ref="Console" /></Logger></Loggers></Configuration>
+
+druid_extensions_loadList=["druid-basic-security", "druid-bloom-filter", "druid-datasketches", "druid-hdfs-storage", "druid-histogram", "druid-parquet-extensions", "druid-kafka-extraction-namespace", "druid-kafka-indexing-service", "druid-kinesis-indexing-service", "druid-lookups-cached-global", "druid-lookups-cached-single", "druid-orc-extensions", "druid-stats", "druid-time-min-max", "druid-redis-cache", "kafka-emitter", "postgresql-metadata-storage", "druid-lookups-cached-global" ]
+
+# Logging
+# Log all runtime properties on startup. Disable to avoid logging properties on startup:
+druid_startup_logging_logProperties=true
+
+# Zookeeper
+druid_zk_service_host=zookeeper
+druid_zk_paths_base=/druid
+
+# For PostgreSQL:
+druid_metadata_storage_type=postgresql
+druid_metadata_storage_connector_connectURI=jdbc:postgresql://postgres:5432/druid
+druid_metadata_storage_connector_user=druid
+druid_metadata_storage_connector_password=druid
+
+# Deep storage with HDFS
+druid_storage_type=hdfs
+druid_indexer_logs_type=hdfs
+druid_storage_storageDirectory=/opt/shared/segments
+druid_indexer_logs_directory=/opt/shared/indexing-logs
+
+# Monitoring
+druid_monitoring_monitors=["org.apache.druid.java.util.metrics.JvmMonitor"]
+druid_emitter=noop
+druid_emitter_logging_logLevel=info
+
+# SQL
+druid_sql_enable=true
+
+# Lookups
+druid_lookup_enableLookupSyncOnStartup=false
+
+#################### Common Functions Done #####################
+
+# Java tuning
+druid_indexer_runner_javaOptsArray=["-server", "-Xms512m", "-Xmx512m", "-XX:+UseG1GC", "-XX:MaxDirectMemorySize=128m", "-XX:+ExitOnOutOfMemoryError", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=var/tmp", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
+
+# HTTP proxy
+druid.router.http.numConnections=50
+druid.router.http.readTimeout=PT5M
+druid.router.http.numMaxThreads=100
+druid.server.http.numThreads=100
+
+# Management proxy to coordinator / overlord: required for unified web console_
+druid_router_managementProxy_enabled=true
+
+# Extras
+druid_auth_allowUnauthenticatedHttpOptions=true

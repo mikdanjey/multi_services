@@ -4,7 +4,7 @@
     "ioConfig": {
       "type": "kafka",
       "consumerProperties": {
-        "bootstrap.servers": "localhost:9094"
+        "bootstrap.servers": "18.232.169.254:9094"
       },
       "topic": "transactions",
       "inputFormat": {
@@ -13,7 +13,8 @@
       "useEarliestOffset": true
     },
     "tuningConfig": {
-      "type": "kafka"
+      "type": "kafka",
+      "maxRowsInMemory": 2000000
     },
     "dataSchema": {
       "dataSource": "transactions",
@@ -32,13 +33,14 @@
           {
             "type": "double",
             "name": "amount"
-          }
+          },
+          "index"
         ]
       },
       "granularitySpec": {
-        "queryGranularity": "none",
+        "queryGranularity": "hour",
         "rollup": false,
-        "segmentGranularity": "all"
+        "segmentGranularity": "hour"
       }
     }
   }
