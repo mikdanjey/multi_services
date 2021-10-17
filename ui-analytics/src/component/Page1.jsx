@@ -2,32 +2,40 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { JsonToTable } from "react-json-to-table";
+import Loader from "react-loader-spinner";
+
 class Page1 extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      jsonAllData: [],
+      widgetData1: [],
+      isWidgetLoaderVisible: true,
       jsonLastMonthData: [],
     }
     this.baseURL = `/druid/v2/sql`; // ${window.location.host}
   }
+
+  sleeper = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
   componentDidMount() {
     // this.getDruidAllData();
     // this.getDruidLastMonthData();
   }
 
-  getDruidAllData = () => {
+  getDruidAllData = async () => {
     const thisClass = this;
+    await thisClass.sleeper(100);
+    thisClass.setState({ isWidgetLoaderVisible: true });
     axios.post(this.baseURL,
       {
         query: "SELECT COUNT(*) AS TotalRecords FROM transactions"
       })
       .then(response => {
-        thisClass.setState({ jsonAllData: JSON.stringify(response.data, null, 2) });
+        thisClass.setState({ isWidgetLoaderVisible: false, jsonAllData: JSON.stringify(response.data, null, 2) });
       })
       .catch(error => {
+        thisClass.setState({ isWidgetLoaderVisible: true });
         console.error('There was an error!', error);
       });
   }
@@ -47,7 +55,7 @@ class Page1 extends Component {
   }
 
   render() {
-    const { jsonAllData, jsonLastMonthData } = this.state;
+    const { jsonAllData, jsonLastMonthData, isWidgetLoaderVisible } = this.state;
     return (
       <>
         <Container fluid>
@@ -57,11 +65,20 @@ class Page1 extends Component {
               <Card>
                 <Card.Header as="h5">All Data <Button onClick={this.getDruidAllData} variant="primary">Get Data</Button></Card.Header>
                 <Card.Body>
-                  <code>
-                    <pre>
-                      {jsonAllData}
-                    </pre>
-                  </code>
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible}
+                  />
+                  {!isWidgetLoaderVisible &&
+                    <code>
+                      <pre>
+                        {jsonAllData}
+                      </pre>
+                    </code>
+                  }
                 </Card.Body>
               </Card>
             </Col>
