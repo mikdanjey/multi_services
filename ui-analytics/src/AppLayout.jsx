@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Navbar, Nav } from 'react-bootstrap';
+import { NavLinker } from "./NavLinker";
 class AppLayout extends Component {
   render() {
     const { children } = this.props;
@@ -11,8 +12,8 @@ class AppLayout extends Component {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="/page2">Page 2</Nav.Link>
-                <Nav.Link href="#pricing">Page 1</Nav.Link>
+                <NavLinker path="/" text="Home" />
+                <NavLinker path="/page2" text="Page 2" />
               </Nav>
             </Navbar.Collapse>
           </Container>
