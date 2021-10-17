@@ -1,122 +1,49 @@
-import React, { Component } from "react";
-import plywood from "plywood";
+import React, { Component } from 'react';
 
-var External = plywood.External;
-var druidRequesterFactory = require('plywood-druid-requester').druidRequesterFactory;
+import { Route, Switch } from 'react-router-dom';
+
+import ScrollToTopRoute from './ScrollToTopRoute';
+
+import AppLayout from './AppLayout';
+
+import Dashboard1 from './component/Dashboard1';
+import Dashboard2 from './component/Dashboard2';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.ply = plywood.ply;
-    this.$ = plywood.$;
-    this.state = {
-      jsonAllData: null,
-      jsonLastMonthData: null,
+    checkNot404 = pathname => {
+        const URLs = ["/", "/dashboard1", "/dashboard2"];
+        if (URLs.includes(pathname)) { // Static URLs
+            return true;
+        } else if (pathname.startsWith("/blog/")) { // Dynamic URLs
+            return true;
+        } else {
+            return false; // It's a 404
+        }
     }
-    this.druidRequester = druidRequesterFactory({
-      host: 'localhost:8888' // Where ever your Druid may be
-    });
 
-    this.druidDataset = External.fromJS({
-      engine: 'druid',
-      source: 'transactions',  // The datasource name in Druid
-      timeAttribute: 'time',  // Druid's anonymous time attribute will be called 'time',
-      context: {
-        timeout: 10000 // The Druid context
-      }
-    }, this.druidRequester);
-  }
-
-  componentDidMount() {
-    this.getDruidAllData();
-    this.getDruidLastMonthData();
-  }
-
-  getDruidAllData = () => {
-    const thisClass = this;
-    var context = {
-      transactions: this.druidDataset
-    };
-    var ex = this.ply()
-      // Define the external in scope with a filter on time and language
-      .apply("transactions",
-        this.$('transactions').filter(this.$("time").in({
-          start: new Date("2020-01-01T00:00:00Z"),
-          end: new Date("2021-10-01T00:00:00Z")
-        }))
-      )
-      // Calculate count
-      .apply('count', this.$('transactions').count())
-      // Calculate the sum of the `added` attribute
-      .apply('amount', '$transactions.sum($amount)');
-    ex.compute(context).then(function (data) {
-      // Log the data while converting it to a readable standard
-      // console.log(JSON.stringify(data.toJS(), null, 2));
-      thisClass.setState({ jsonAllData: JSON.stringify(data.toJS(), null, 2) });
-    });
-    // .done();
-  }
-
-  getDruidLastMonthData = () => {
-    const thisClass = this;
-    var context = {
-      transactions: this.druidDataset
-    };
-    var ex = this.ply()
-      // Define the external in scope with a filter on time and language
-      .apply("transactions",
-        this.$('transactions').filter(this.$("time").in({
-          start: new Date("2021-09-01T00:00:00Z"),
-          end: new Date("2021-09-30T00:00:00Z")
-        }))
-      )
-      // Calculate count
-      .apply('count', this.$('transactions').count())
-      // Calculate the sum of the `added` attribute
-      .apply('amount', '$transactions.sum($amount)');
-    ex.compute(context).then(function (data) {
-      // Log the data while converting it to a readable standard
-      // console.log(JSON.stringify(data.toJS(), null, 2));
-      thisClass.setState({ jsonLastMonthData: JSON.stringify(data.toJS(), null, 2) });
-    });
-    // .done();
-  }
-
-  render() {
-    const { jsonAllData, jsonLastMonthData } = this.state;
-    return <div>
-      <table border="2" cellspacing="0" cellpadding="0">
-
-        <tr>
-          <th>All Data <button onClick={this.getDruidAllData}>Get Data</button></th>
-        </tr>
-        <tr>
-          <td>
-            <code>
-              <pre>
-                {jsonAllData}
-              </pre>
-            </code>
-          </td>
-        </tr>
-
-        <tr>
-          <th>Last Month Data <button onClick={this.getDruidAllData}>Get Data</button></th>
-        </tr>
-        <tr>
-          <td>
-            <code>
-              <pre>
-                {jsonLastMonthData}
-              </pre>
-            </code>
-          </td>
-        </tr>
-
-      </table>
-    </div>;
-  }
+    render() {
+        return (
+            <Route render={({ location }) => (
+                <Switch location={location}>
+                    {this.checkNot404(location.pathname) &&
+                        <React.Fragment>
+                            <AppLayout>
+                                <ScrollToTopRoute exact path={`${process.env.PUBLIC_URL}/`} component={Dashboard1} />
+                                <ScrollToTopRoute exact path={`${process.env.PUBLIC_URL}/dashboard1`} component={Dashboard1} />
+                                <ScrollToTopRoute exact path={`${process.env.PUBLIC_URL}/dashboard2`} component={Dashboard2} />
+                            </AppLayout>
+                        </React.Fragment>
+                    }
+                    {!this.checkNot404(location.pathname) &&
+                        <React.Fragment>
+                            <h1>Not Found</h1>
+                        </React.Fragment>
+                    }
+                </Switch>
+            )} />
+        );
+    }
 }
 
 export default App;
