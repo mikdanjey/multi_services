@@ -11,6 +11,12 @@ class Dashboard1 extends Component {
     this.state = {
       widgetData1: [],
       isWidgetLoaderVisible1: true,
+
+      widgetData2: [],
+      isWidgetLoaderVisible2: true,
+
+      widgetData3: [],
+      isWidgetLoaderVisible3: true,
     }
     this.baseURL = `/druid/v2/sql`;
 
@@ -65,8 +71,38 @@ class Dashboard1 extends Component {
     }
   }
 
+  getDruidWidget2 = async () => {
+    const thisClass = this;
+    thisClass.setState({ isWidgetLoaderVisible2: true });
+    await thisClass.sleeper(100);
+    let response = [];
+    let widgetData2 = [];
+    try {
+
+      thisClass.setState({ isWidgetLoaderVisible2: false, widgetData2 });
+    } catch (error) {
+      thisClass.setState({ isWidgetLoaderVisible2: true });
+      console.error('There was an error!', error);
+    }
+  }
+
+  getDruidWidget3 = async () => {
+    const thisClass = this;
+    thisClass.setState({ isWidgetLoaderVisible3: true });
+    await thisClass.sleeper(100);
+    let response = [];
+    let widgetData3 = [];
+    try {
+
+      thisClass.setState({ isWidgetLoaderVisible3: false, widgetData3 });
+    } catch (error) {
+      thisClass.setState({ isWidgetLoaderVisible3: true });
+      console.error('There was an error!', error);
+    }
+  }
+
   render() {
-    const { widgetData1, isWidgetLoaderVisible1 } = this.state;
+    const { widgetData1, isWidgetLoaderVisible1, widgetData2, isWidgetLoaderVisible2, widgetData3, isWidgetLoaderVisible3, } = this.state;
     return (
       <>
         <Container fluid style={{ padding: 20 }}>
@@ -106,7 +142,7 @@ class Dashboard1 extends Component {
                       <h5 className="card-title">Second Data Point</h5>
                     </div>
                     <div className="col text-end">
-                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                      <Button onClick={this.getDruidWidget2} variant="primary">Get Data</Button>
                     </div>
                   </div>
                 </Card.Header>
@@ -116,10 +152,10 @@ class Dashboard1 extends Component {
                     color="#50C878"
                     height={100}
                     width={100}
-                    visible={isWidgetLoaderVisible1}
+                    visible={isWidgetLoaderVisible2}
                   />
-                  {!isWidgetLoaderVisible1 &&
-                    <JsonToTable json={widgetData1} />
+                  {!isWidgetLoaderVisible2 &&
+                    <JsonToTable json={widgetData2} />
                   }
                 </Card.Body>
               </Card>
@@ -133,7 +169,7 @@ class Dashboard1 extends Component {
                       <h5 className="card-title">Third Data Point</h5>
                     </div>
                     <div className="col text-end">
-                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                      <Button onClick={this.getDruidWidget3} variant="primary">Get Data</Button>
                     </div>
                   </div>
                 </Card.Header>
@@ -143,10 +179,10 @@ class Dashboard1 extends Component {
                     color="#50C878"
                     height={100}
                     width={100}
-                    visible={isWidgetLoaderVisible1}
+                    visible={isWidgetLoaderVisible3}
                   />
-                  {!isWidgetLoaderVisible1 &&
-                    <JsonToTable json={widgetData1} />
+                  {!isWidgetLoaderVisible3 &&
+                    <JsonToTable json={widgetData3} />
                   }
                 </Card.Body>
               </Card>
