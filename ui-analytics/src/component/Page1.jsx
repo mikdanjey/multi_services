@@ -10,7 +10,7 @@ class Page1 extends Component {
     super(props);
     this.state = {
       widgetData1: [],
-      isWidgetLoaderVisible: true,
+      isWidgetLoaderVisible1: true,
       jsonLastMonthData: [],
     }
     this.baseURL = `/druid/v2/sql`; // ${window.location.host}
@@ -19,23 +19,23 @@ class Page1 extends Component {
   sleeper = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
   componentDidMount() {
-    // this.getDruidAllData();
+    // this.getDruidWidget1();
     // this.getDruidLastMonthData();
   }
 
-  getDruidAllData = async () => {
+  getDruidWidget1 = async () => {
     const thisClass = this;
     await thisClass.sleeper(100);
-    thisClass.setState({ isWidgetLoaderVisible: true });
+    thisClass.setState({ isWidgetLoaderVisible1: true });
     axios.post(this.baseURL,
       {
         query: "SELECT COUNT(*) AS TotalRecords FROM transactions"
       })
       .then(response => {
-        thisClass.setState({ isWidgetLoaderVisible: false, jsonAllData: JSON.stringify(response.data, null, 2) });
+        thisClass.setState({ isWidgetLoaderVisible1: false, widgetData1: JSON.stringify(response.data, null, 2) });
       })
       .catch(error => {
-        thisClass.setState({ isWidgetLoaderVisible: true });
+        thisClass.setState({ isWidgetLoaderVisible1: true });
         console.error('There was an error!', error);
       });
   }
@@ -55,44 +55,204 @@ class Page1 extends Component {
   }
 
   render() {
-    const { jsonAllData, jsonLastMonthData, isWidgetLoaderVisible } = this.state;
+    const { widgetData1, isWidgetLoaderVisible1 } = this.state;
     return (
       <>
-        <Container fluid>
-          <br />
+        <Container fluid style={{ padding: 20 }}>
           <Row>
             <Col>
               <Card>
-                <Card.Header as="h5">All Data <Button onClick={this.getDruidAllData} variant="primary">Get Data</Button></Card.Header>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">January 2020</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
                 <Card.Body>
                   <Loader
                     type="Circles"
                     color="#50C878"
                     height={100}
                     width={100}
-                    visible={isWidgetLoaderVisible}
+                    visible={isWidgetLoaderVisible1}
                   />
-                  {!isWidgetLoaderVisible &&
+                  {!isWidgetLoaderVisible1 &&
                     <code>
                       <pre>
-                        {jsonAllData}
+                        {widgetData1}
                       </pre>
                     </code>
                   }
                 </Card.Body>
               </Card>
             </Col>
+
             <Col>
               <Card>
-                <Card.Header as="h5">Last Month Data <Button onClick={this.getDruidLastMonthData} variant="primary">Get Data</Button></Card.Header>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">February 2020</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
                 <Card.Body>
-                  <JsonToTable json={jsonLastMonthData} />
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible1}
+                  />
+                  {!isWidgetLoaderVisible1 &&
+                    <code>
+                      <pre>
+                        {widgetData1}
+                      </pre>
+                    </code>
+                  }
                 </Card.Body>
               </Card>
             </Col>
+
             <Col>
+              <Card>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">March 2020</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
+                <Card.Body>
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible1}
+                  />
+                  {!isWidgetLoaderVisible1 &&
+                    <code>
+                      <pre>
+                        {widgetData1}
+                      </pre>
+                    </code>
+                  }
+                </Card.Body>
+              </Card>
             </Col>
+
           </Row>
+          <br />
+          <Row>
+
+            <Col>
+              <Card>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">May 2020</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
+                <Card.Body>
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible1}
+                  />
+                  {!isWidgetLoaderVisible1 &&
+                    <code>
+                      <pre>
+                        {widgetData1}
+                      </pre>
+                    </code>
+                  }
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col>
+              <Card>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">June 2020</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
+                <Card.Body>
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible1}
+                  />
+                  {!isWidgetLoaderVisible1 &&
+                    <code>
+                      <pre>
+                        {widgetData1}
+                      </pre>
+                    </code>
+                  }
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col>
+              <Card>
+                <Card.Header>
+                  <div className="row">
+                    <div className="col">
+                      <h5 className="card-title">July 2020</h5>
+                    </div>
+                    <div className="col text-end">
+                      <Button onClick={this.getDruidWidget1} variant="primary">Get Data</Button>
+                    </div>
+                  </div>
+                </Card.Header>
+                <Card.Body>
+                  <Loader
+                    type="Circles"
+                    color="#50C878"
+                    height={100}
+                    width={100}
+                    visible={isWidgetLoaderVisible1}
+                  />
+                  {!isWidgetLoaderVisible1 &&
+                    <code>
+                      <pre>
+                        {widgetData1}
+                      </pre>
+                    </code>
+                  }
+                </Card.Body>
+              </Card>
+            </Col>
+
+          </Row>
+
+
         </Container>
       </>
     )
