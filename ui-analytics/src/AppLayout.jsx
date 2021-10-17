@@ -12,8 +12,8 @@ class AppLayout extends Component {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <NavLinker path="/" text="Home" />
-                <NavLinker path="/page2" text="Page 2" />
+                <NavLinker path="/" text="Dashboard 1" />
+                <NavLinker path="/dashboard2" text="Dashboard 2" />
               </Nav>
             </Navbar.Collapse>
           </Container>

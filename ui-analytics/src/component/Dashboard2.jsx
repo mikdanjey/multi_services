@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { JsonToTable } from "react-json-to-table";
-class Page2 extends Component {
+class Dashboard2 extends Component {
 
   constructor(props) {
     super(props);
@@ -54,20 +54,10 @@ class Page2 extends Component {
           <br />
           <Row>
             <Col>
-              <Card>
-                <Card.Header as="h5">All Data <Button onClick={this.getDruidAllData} variant="primary">Get Data</Button></Card.Header>
-                <Card.Body>
-                  <code>
-                    <pre>
-                      {jsonAllData}
-                    </pre>
-                  </code>
-                </Card.Body>
-              </Card>
             </Col>
             <Col>
               <Card>
-                <Card.Header as="h5">Last Month Data <Button onClick={this.getDruidLastMonthData} variant="primary">Get Data</Button></Card.Header>
+                <Card.Header as="h5">Sample Data <Button onClick={this.getDruidLastMonthData} variant="primary">Get Data</Button></Card.Header>
                 <Card.Body>
                   <JsonToTable json={jsonLastMonthData} />
                 </Card.Body>
@@ -82,4 +72,4 @@ class Page2 extends Component {
   }
 }
 
-export default Page2;
+export default Dashboard2;
