@@ -9,6 +9,7 @@ class Dashboard1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loadStart: true,
       widgetData1: [],
       isWidgetLoaderVisible1: true,
 
@@ -34,15 +35,17 @@ class Dashboard1 extends Component {
   sleeper = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
   componentDidMount() {
-    this.getDruidWidget1();
-    this.getDruidWidget2();
-    this.getDruidWidget3();
-    this.getDruidWidget4();
-    this.getDruidWidget5();
-    this.getDruidWidget6();
+    if (this.state.loadStart) {
+      this.getDruidWidget1();
+      this.getDruidWidget2();
+      this.getDruidWidget3();
+      this.getDruidWidget4();
+      this.getDruidWidget5();
+      this.getDruidWidget6();
+    }
   }
 
-  getMonth = (year, month) => {
+  getMonth = (year = '', month) => {
     const months = ["", "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"];
     return `${year} ${months[month]}`;
@@ -106,13 +109,16 @@ class Dashboard1 extends Component {
     try {
       response = await axios.post(this.baseURL, {
         query: `
-        SELECT customerId as "Customer", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
+        SELECT customerId as "Customer", EXTRACT(Month FROM __time) as "Per Month", COUNT(*) as "Total Count", ROUND(SUM(amount), 0) as "Total Volume"
         FROM transactions WHERE __time BETWEEN '2020-01-01' AND '2021-12-31'
-        GROUP BY 1
+        GROUP BY 1,2
         ORDER BY 1 ASC
         `
       });
       widgetData3 = response.data;
+      widgetData3 = widgetData3.map((item) => {
+        return { "Customer": item["Customer"], "Per Month": this.getMonth(item["Per Year"], item["Per Month"]), "Total Count": item["Total Count"], "Total Volume": item["Total Volume"] }
+      });
       thisClass.setState({ isWidgetLoaderVisible3: false, widgetData3 });
     } catch (error) {
       thisClass.setState({ isWidgetLoaderVisible3: true });
@@ -194,7 +200,7 @@ class Dashboard1 extends Component {
         <Container fluid style={{ padding: 20 }}>
           <Row>
 
-          <Col>
+            <Col>
               <Card>
                 <Card.Header>
                   <div className="row">
@@ -275,7 +281,6 @@ class Dashboard1 extends Component {
               </Card>
             </Col>
 
-            
 
           </Row>
           <br />
