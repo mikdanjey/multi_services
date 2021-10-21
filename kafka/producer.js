@@ -1,18 +1,9 @@
-const { Kafka, logLevel } = require('kafkajs');
+const { Kafka } = require('kafkajs');
 const { v4: uuidv4 } = require('uuid');
 const moment = require('moment');
-const faker = require('faker');
 
 const { CLOUD_KAFKA_MAX_PARTITION, CLOUD_KAFKA_TOPIC, CLOUD_KAFKA_BROKERS, CLOUD_KAFKA_USERNAME, CLOUD_KAFKA_PASSWORD, CLOUD_KAFKA_CLIENT_ID } = require("./config.js");
 
-function nanoseconds(time) {
-    if (!Array.isArray(time) || time.length !== 2) {
-        throw new TypeError('expected an array from process.hrtime()');
-    }
-    return +time[0] * 1e9 + +time[1];
-};
-
-// 4oxw1lld-default
 async function produce() {
     const kafka = new Kafka({
         clientId: CLOUD_KAFKA_CLIENT_ID,

@@ -95,7 +95,7 @@ https://github.com/apache/druid/blob/0.22.0/distribution/docker/docker-compose.y
 CORS: https://druid.apache.org/docs/latest/design/auth.html
 
 Memory: https://druid.apache.org/docs/latest/operations/basic-cluster-tuning.html
-
+https://docs.docker.com/config/pruning
 Zookeeper Doc: https://hub.docker.com/_/zookeeper
 
 # Linus
