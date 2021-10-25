@@ -9,9 +9,9 @@ docker-compose up -d
 
 http://localhost:8888
 
-Druid UI: http://18.232.169.254:8888
+Druid UI: http://34.228.196.131:8888
 
-Analytics UI: http://18.232.169.254:5000
+Analytics UI: http://34.228.196.131:5000
 
 git pull origin develop
 

@@ -8,7 +8,7 @@ const app = express();
 // Configuration
 const PORT = 5000;
 const HOST = "0.0.0.0";
-const API_SERVICE_URL = "http://18.232.169.254:8888";
+const API_SERVICE_URL = "http://34.228.196.131:8888";
 
 app.use(express.static(path.join(__dirname, 'build')));
 
