@@ -2,7 +2,7 @@
   "name": "ui-analytics",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://34.228.196.131:8888",
+  "proxy": "http://18.209.150.127:8888",
   "dependencies": {
     "axios": "^0.23.0",
     "bootstrap": "5.1.3",

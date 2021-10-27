@@ -23,7 +23,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 34.228.196.131
+      KAFKA_ADVERTISED_HOST_NAME: 18.209.150.127
       KAFKA_BROKER_ID: 6
       KAFKA_LOG_DIR: /logs
       KAFKA_NUM_PARTITIONS: 3
@@ -33,10 +33,10 @@ services:
       KAFKA_LOG_SEGMENT_BYTES: 1073741824
       KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 300000
       KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2182
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://34.228.196.131:9094
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://18.209.150.127:9094
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_CREATE_TOPICS: "portal_customers:3:1,portal_merchants:3:1,portal_tpns:3:1,portal_device_models:3:1,switch_transactions:3:1,switch_tx_bases:3:1,switch_tx_extns:3:1,switch_tx_alternate:3:1,test_stream:3:1:compact"
+      KAFKA_CREATE_TOPICS: "portal_customers:3:1,portal_merchants:3:1,portal_tpns:3:1,portal_device_models:3:1,switch_transactions:3:1,switch_tx_bases:3:1,switch_tx_extns:3:1,switch_tx_alternate:3:1,bin_log:3:1:compact"
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
     depends_on:
       - zookeeper1
