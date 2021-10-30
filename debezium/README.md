@@ -8,9 +8,9 @@ docker run -it --rm --name zookeeper -p 2181:2181 -p 2888:2888 -p 3888:3888 debe
 
 docker run -it --rm --name kafka -p 9092:9092 --link zookeeper:zookeeper debezium/kafka:1.8
 
-docker run -it --rm --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=debezium -e MYSQL_USER=mysqluser -e MYSQL_PASSWORD=mysqlpw debezium/example-mysql:1.8
+docker run -it --rm --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_PASSWORD=root debezium/example-mysql:1.8
 
-docker run -it --rm --name mysqlterm --link mysql --rm mysql:5.7 sh -c "exec mysql -h 192.168.29.240 -P 3306 -u mysqluser -p mysqlpw"
+docker run -it --rm --name mysqlterm --link mysql --rm mysql:5.7 sh -c "exec mysql -h 192.168.29.240 -P 3306 -u root -p root"
 
 
 docker run -it --rm --name connect -p 8083:8083 -e GROUP_ID=1 -e CONFIG_STORAGE_TOPIC=my_connect_configs -e OFFSET_STORAGE_TOPIC=my_connect_offsets -e STATUS_STORAGE_TOPIC=my_connect_statuses --link zookeeper:zookeeper --link kafka:kafka --link mysql:mysql debezium/connect:1.8
