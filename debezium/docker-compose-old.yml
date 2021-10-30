@@ -29,9 +29,9 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  postgres-connector:
-    image: debezium/connect:1.6
-    container_name: postgres-debezium
+  debezium-connector:
+    image: debezium/connect:latest
+    container_name: debezium-connector
     ports:
       - 8083:8083
     links:
