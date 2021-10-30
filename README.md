@@ -6,7 +6,7 @@
 
 ## Up the server
 docker-compose up -d
-
+ 
 http://localhost:8888
 
 Druid UI: http://18.209.150.127:8888
