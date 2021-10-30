@@ -3,9 +3,11 @@ version: "3.1"
 services:
   zookeeper:
     container_name: zookeeper
-    image: zookeeper:3.6.3
+    image: debezium/zookeeper:1.8
     ports:
       - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
     environment:
       ZOO_MY_ID: 6
       ZOO_TICK_TIME: 2000
@@ -13,15 +15,14 @@ services:
       ZOO_SYNC_LIMIT: 2
       ZOO_AUTOPURGE_PURGEINTERVAL: 1
       ZOO_AUTOPURGE_SNAPRETAINCOUNT: 5
-      ZOO_CFG_EXTRA: "clientPort=2181"
   kafka:
     container_name: kafka
-    image: wurstmeister/kafka
+    image: debezium/kafka:1.8
     ports:
-      - "9094:9094"
       - "9092:9092"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - "9094:9094"
+    links:
+      - zookeeper
     environment:
       KAFKA_ADVERTISED_HOST_NAME: 192.168.29.240
       KAFKA_BROKER_ID: 6
@@ -42,18 +43,18 @@ services:
     depends_on:
       - zookeeper
   debezium-connector:
-    image: debezium/connect:latest
+    image: debezium/connect:1.8
     container_name: debezium-connector
     ports:
       - 8083:8083
     links:
-      - kafka
       - zookeeper
+      - kafka
     depends_on:
-      - kafka
       - zookeeper
+      - kafka
     environment:
-      - BOOTSTRAP_SERVERS=kafka:9092
+      - BOOTSTRAP_SERVERS=kafka:9094
       - GROUP_ID=1
       - CONFIG_STORAGE_TOPIC=debezium_connect_configs
       - OFFSET_STORAGE_TOPIC=debezium_connect_offsets
