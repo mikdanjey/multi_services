@@ -11,7 +11,7 @@ https://kafka.js.org/docs/configuration
 https://www.sohamkamani.com/nodejs/working-with-kafka/
 
 
-18.232.169.254:9094
+18.209.150.127:9094
 transactions
 
 pm2 start producer.js --name "Kafka Producer"

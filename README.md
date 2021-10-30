@@ -6,12 +6,12 @@
 
 ## Up the server
 docker-compose up -d
-
+ 
 http://localhost:8888
 
-Druid UI: http://18.232.169.254:8888
+Druid UI: http://18.209.150.127:8888
 
-Analytics UI: http://18.232.169.254:5000
+Analytics UI: http://18.209.150.127:5000
 
 git pull origin develop
 
@@ -49,12 +49,14 @@ cd /opt/kafka
 ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic newtopic
 
 ## Topic Description
-./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic newtopic
+./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic "schema-changes.denovosystem_portal_dev"
 
 ./bin/kafka-topics.sh --describe --zookeeper zookeeper:2181 --topic newtopic
 
 ## List All Topics
 ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+./bin/kafka-console-consumer.sh --bootstrap-server 172.17.0.3:9092 --topic "schema-changes.denovosystem_portal_dev" --from-beginning
 
 ./bin/kafka-topics.sh --list --zookeeper zookeeper:2181
 
@@ -95,7 +97,7 @@ https://github.com/apache/druid/blob/0.22.0/distribution/docker/docker-compose.y
 CORS: https://druid.apache.org/docs/latest/design/auth.html
 
 Memory: https://druid.apache.org/docs/latest/operations/basic-cluster-tuning.html
-
+https://docs.docker.com/config/pruning
 Zookeeper Doc: https://hub.docker.com/_/zookeeper
 
 # Linus

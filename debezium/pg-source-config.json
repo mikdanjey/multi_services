@@ -1,0 +1,16 @@
+{
+    "name": "mariadb-source",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "tasks.max": "1",
+        "database.hostname": "52.72.253.242",
+        "database.port": "3306",
+        "database.user": "maxuser",
+        "database.password": "maxuser",
+        "database.server.id": "1",
+        "database.server.name": "dbserver1",
+        "database.include.list": "denovosystem_portal_dev",
+        "database.history.kafka.bootstrap.servers": "192.168.29.240:9094",
+        "database.history.kafka.topic": "schema-changes.denovosystem_portal_dev"
+    }
+}
