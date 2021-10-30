@@ -2,6 +2,8 @@ docker volume prune
 
 docker-compose down && docker volume prune
 
+docker-compose up
+
 docker run -it --rm --name zookeeper -p 2181:2181 -p 2888:2888 -p 3888:3888 debezium/zookeeper:1.8
 
 docker run -it --rm --name kafka -p 9092:9092 --link zookeeper:zookeeper debezium/kafka:1.8

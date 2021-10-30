@@ -3,11 +3,9 @@ version: "3.1"
 services:
   zookeeper:
     container_name: zookeeper
-    image: debezium/zookeeper:1.8
+    image: zookeeper:3.6.3 
     ports:
       - "2181:2181"
-      - "2888:2888"
-      - "3888:3888"
     environment:
       ZOO_MY_ID: 6
       ZOO_TICK_TIME: 2000
@@ -15,23 +13,27 @@ services:
       ZOO_SYNC_LIMIT: 2
       ZOO_AUTOPURGE_PURGEINTERVAL: 1
       ZOO_AUTOPURGE_SNAPRETAINCOUNT: 5
+      ZOO_CFG_EXTRA: "clientPort=2181"
   kafka:
     container_name: kafka
-    image: debezium/kafka:1.8
+    image: wurstmeister/kafka
     ports:
-      - "9092:9092"
       - "9094:9094"
-    links:
-      - zookeeper
+      - "9092:9092"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 52.72.253.242
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.29.240
+      KAFKA_BROKER_ID: 6
       KAFKA_LOG_DIR: /logs
+      KAFKA_NUM_PARTITIONS: 25
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_MIN_INSYNC_REPLICAS: 1
       KAFKA_LOG_RETENTION_HOURS: 168
       KAFKA_LOG_SEGMENT_BYTES: 1073741824
       KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 300000
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://52.72.253.242:9094
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://192.168.29.240:9094
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_DELETE_TOPIC_ENABLE: 'true'
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
@@ -39,20 +41,3 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
     depends_on:
       - zookeeper
-  debezium-connector:
-    image: debezium/connect:1.8
-    container_name: debezium-connector
-    ports:
-      - 8083:8083
-    links:
-      - zookeeper
-      - kafka
-    depends_on:
-      - zookeeper
-      - kafka
-    environment:
-      - BOOTSTRAP_SERVERS=52.72.253.242:9094
-      - GROUP_ID=1
-      - CONFIG_STORAGE_TOPIC=debezium_connect_configs
-      - OFFSET_STORAGE_TOPIC=debezium_connect_offsets
-      - STATUS_STORAGE_TOPIC=debezium_connect_statuses
