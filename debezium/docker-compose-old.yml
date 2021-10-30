@@ -13,7 +13,7 @@ services:
     links:
       - zookeeper
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.29.240
+      KAFKA_ADVERTISED_HOST_NAME: 172.18.0.4
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_DELETE_TOPIC_ENABLE: 'true'
@@ -25,7 +25,7 @@ services:
     image: postgres
     container_name: postgres
     ports:
-      - 5433:5432
+      - 5432:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -33,7 +33,7 @@ services:
     image: debezium/connect:1.6
     container_name: postgres-debezium
     ports:
-      - 9090:8083
+      - 8083:8083
     links:
       - kafka
     depends_on:
