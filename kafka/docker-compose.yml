@@ -1,42 +1,40 @@
-version: '3.1'
+version: "3.1"
+
 services:
-  zookeeper1:
-    container_name: zookeeper1
-    image: zookeeper:3.6.3
+  zookeeper:
+    container_name: zookeeper
+    image: debezium/zookeeper:1.8
     ports:
-      - "2182:2182"
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
     environment:
-      ZOO_MY_ID: 6
+      ZOO_MY_ID: 1
       ZOO_TICK_TIME: 2000
-      ZOO_INIT_LIMIT: 10
-      ZOO_SYNC_LIMIT: 5
-      ZOO_AUTOPURGE_PURGEINTERVAL: 0
-      ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
-      ZOO_MAX_CLIENT_CNXNS: 60
-      ZOO_CFG_EXTRA: "clientPort=2182"
+      ZOO_INIT_LIMIT: 5
+      ZOO_SYNC_LIMIT: 2
+      ZOO_AUTOPURGE_PURGEINTERVAL: 1
+      ZOO_AUTOPURGE_SNAPRETAINCOUNT: 5
   kafka:
     container_name: kafka
-    image: wurstmeister/kafka
+    image: debezium/kafka:1.8
     ports:
-      - "9094:9094"
       - "9092:9092"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 18.209.150.127
-      KAFKA_BROKER_ID: 6
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_BROKER_ID: 1
       KAFKA_LOG_DIR: /logs
-      KAFKA_NUM_PARTITIONS: 3
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_NUM_PARTITIONS: 30
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 5
       KAFKA_MIN_INSYNC_REPLICAS: 1
       KAFKA_LOG_RETENTION_HOURS: 168
       KAFKA_LOG_SEGMENT_BYTES: 1073741824
       KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 300000
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2182
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://18.209.150.127:9094
-      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_CREATE_TOPICS: "portal_customers:3:1,portal_merchants:3:1,portal_tpns:3:1,portal_device_models:3:1,switch_transactions:3:1,switch_tx_bases:3:1,switch_tx_extns:3:1,switch_tx_alternate:3:1,bin_log:3:1:compact"
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_DELETE_TOPIC_ENABLE: 'true'
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
     depends_on:
-      - zookeeper1
+      - zookeeper

@@ -49,12 +49,14 @@ cd /opt/kafka
 ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic newtopic
 
 ## Topic Description
-./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic newtopic
+./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic "schema-changes.denovosystem_portal_dev"
 
 ./bin/kafka-topics.sh --describe --zookeeper zookeeper:2181 --topic newtopic
 
 ## List All Topics
 ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+./bin/kafka-console-consumer.sh --bootstrap-server 172.17.0.3:9092 --topic "schema-changes.denovosystem_portal_dev" --from-beginning
 
 ./bin/kafka-topics.sh --list --zookeeper zookeeper:2181
 
