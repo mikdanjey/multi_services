@@ -1,17 +1,18 @@
 {
-    "name": "pg-orders-source",
+    "name": "mariadb-source",
     "config": {
-        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-        "database.hostname": "postgres",
-        "database.port": "5432",
-        "database.user": "postgres",
-        "database.password": "postgres",
-        "database.dbname": "postgres",
-        "database.server.name": "myserver",
-        "plugin.name": "wal2json",
-        "table.include.list": "public.customers",
-        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-        "name": "pg-orders-source"
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "database.hostname": "52.72.253.242",
+        "database.port": "3306",
+        "database.user": "maxuser",
+        "database.password": "maxuser",
+        "database.server.id": "1",
+        "database.server.name": "MySQL-Database-Docker",
+        "database.history.kafka.bootstrap.servers": "192.168.29.240:9094",
+        "database.history.kafka.topic": "bin_log",
+        "include.schema.changes": "true",
+        "table.whitelist": "denovosystem_portal_dev.sample",
+        "name": "mariadb-source"
     },
     "tasks": [],
     "type": "source"
