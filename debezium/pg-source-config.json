@@ -10,7 +10,7 @@
         "database.server.id": "1",
         "database.server.name": "dbserver1",
         "database.include.list": "denovosystem_portal_dev",
-        "database.history.kafka.bootstrap.servers": "192.168.29.240:9092",
+        "database.history.kafka.bootstrap.servers": "192.168.29.240:9094",
         "database.history.kafka.topic": "schema-changes.denovosystem_portal_dev"
     }
 }

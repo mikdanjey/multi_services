@@ -41,3 +41,20 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
     depends_on:
       - zookeeper
+  debezium-connector:
+    image: debezium/connect:1.8
+    container_name: debezium-connector
+    ports:
+      - 8083:8083
+    links:
+      - zookeeper
+      - kafka
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=debezium_connect_configs
+      - OFFSET_STORAGE_TOPIC=debezium_connect_offsets
+      - STATUS_STORAGE_TOPIC=debezium_connect_statuses
